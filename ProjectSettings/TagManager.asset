@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Blanket
   - Ball
-  - 
+  - Bug
   - 
   - 
   - 
@@ -40,6 +40,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BlanketWindow
+    uniqueID: 3127793543
+    locked: 0
+  - name: KidBall
+    uniqueID: 1325935533
+    locked: 0
+  - name: BugSwatter
+    uniqueID: 2513499
     locked: 0
   m_RenderingLayers:
   - Default
