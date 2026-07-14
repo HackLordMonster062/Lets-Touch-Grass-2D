@@ -3,6 +3,8 @@ using UnityEngine;
 public class Blanket : MonoBehaviour, IPickup {
 	[SerializeField] Vector3 releasedSize;
 	[SerializeField] Vector3 pickedSize;
+	[SerializeField] Sprite releasedSprite;
+	[SerializeField] Sprite pickedSprite;
 
 	Vector3 _startPosition;
 

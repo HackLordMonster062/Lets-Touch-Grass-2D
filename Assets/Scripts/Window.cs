@@ -20,9 +20,9 @@ public class Window : MonoBehaviour {
     }
 
     void Update() {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Grass.instance.transform.position - transform.position);
+        Collider2D collider = Physics2D.OverlapPoint(transform.position);
 
-		if (IsSunVisible && hit.collider != null && hit.collider.gameObject == Grass.instance.gameObject) {
+		if (IsSunVisible && (collider == null || !collider.TryGetComponent(out Blanket blanket))) {
             Grass.instance.Damage(sunDamage * Time.deltaTime);
         }
     }
