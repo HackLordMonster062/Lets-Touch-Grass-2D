@@ -3,7 +3,9 @@ using UnityEngine;
 public class Grass : Singleton<Grass> {
     [SerializeField] float startingHealth;
     [Tooltip("Rate of growth [seconds per stage]")]
-    [SerializeField] float growthRate;
+    [SerializeField] float growthPace;
+    [Tooltip("Rate of regeneration [HP per second]")]
+    [SerializeField] float regenerationRate;
     [SerializeField] Sprite[] growthStages;
 
     Color _finalColor;
@@ -25,16 +27,30 @@ public class Grass : Singleton<Grass> {
     }
 
     void Update() {
-        Growth += Time.deltaTime / growthRate;
+        if (Health < startingHealth) {
+            Health += regenerationRate * Time.deltaTime;
+            Health = Mathf.Clamp(Health, 0, startingHealth);
+        }
+
+        Growth += Time.deltaTime / growthPace * (Health / startingHealth);
 
         ShowGrowth();
+
+        if (Growth >= growthStages.Length - 1) {
+            FullyGrown();
+        }
     }
 
     void ShowGrowth() {
         _renderer.color = Color.Lerp(Color.black, _finalColor, Mathf.Floor(Growth) / growthStages.Length);
+        //_renderer.sprite = growthStages[Mathf.Clamp((int)Growth, 0, growthStages.Length - 1)];
     }
 
     void Die() {
+
+    }
+
+    void FullyGrown() {
 
     }
 

@@ -1095,7 +1095,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grass
   startingHealth: 100
-  growthRate: 5
+  growthPace: 15
+  regenerationRate: 5
   growthStages:
   - {fileID: 0}
   - {fileID: 0}
