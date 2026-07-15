@@ -1,12 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Kid : MonoBehaviour {
     [SerializeField] Ball ball;
     [SerializeField] int hits;
 
     int _currHits = 0;
+    bool _isActive;
 
-    void Start() {
+    Animator _anim;
+
+	private void Awake() {
+        _anim = GetComponent<Animator>();
+	}
+
+	void Start() {
         Show();
     }
 
@@ -15,13 +23,13 @@ public class Kid : MonoBehaviour {
     }
 
 	private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject == ball.gameObject) {
+        if (_isActive && other.gameObject == ball.gameObject) {
             _currHits++;
 
             if (_currHits >= hits) {
                 _currHits = 0;
 
-                Hide();
+                Exit();
 
                 return;
             }
@@ -34,8 +42,20 @@ public class Kid : MonoBehaviour {
         gameObject.SetActive(true);
         ball.gameObject.SetActive(true);
 
-        ball.transform.position = transform.position;
+        _anim.SetTrigger("Enter");
     }
+
+    public void Ready() {
+        _isActive = true;
+        _anim.enabled = false;
+		ball.Shoot(Grass.instance.transform.position);
+	}
+
+    public void Exit() {
+        _isActive = false;
+        _anim.enabled = true;
+		_anim.SetTrigger("Exit");
+	}
 
     public void Hide() {
 		gameObject.SetActive(false);

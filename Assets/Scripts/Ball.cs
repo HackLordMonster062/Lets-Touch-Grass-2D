@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour {
     [SerializeField] Vector3 target;
     [SerializeField] float arcHeight;
     [SerializeField] float shootingSpeed;
+    [SerializeField] float shootingTorque;
     [SerializeField] float damage;
 
     Rigidbody2D _rb;
@@ -42,5 +43,7 @@ public class Ball : MonoBehaviour {
 		Vector3 vX = delta.normalized * (x / (tUp + tDown));
 
 		_rb.linearVelocity = vX + Vector3.up * vY;
+
+		_rb.AddTorque(Random.Range(-shootingTorque, shootingTorque));
 	}
 }

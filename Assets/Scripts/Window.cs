@@ -5,6 +5,7 @@ public class Window : MonoBehaviour {
     [SerializeField] Color dayColor;
     [SerializeField] Color nightColor;
     [SerializeField] Color sunColor;
+    [SerializeField] Animator sunAnimator;
     [SerializeField] float cycleLength;
     [Tooltip("Damage per second while the sun is visible")]
     [SerializeField] float sunDamage;
@@ -33,12 +34,13 @@ public class Window : MonoBehaviour {
 
             yield return new WaitForSeconds(cycleLength / 6);
 
-            _renderer.color = sunColor;
+            //_renderer.color = sunColor;
+            sunAnimator.SetTrigger("Rise");
             IsSunVisible = true;
 
             yield return new WaitForSeconds(cycleLength / 6);
 
-            _renderer.color = dayColor;
+            //_renderer.color = dayColor;
             IsSunVisible = false;
 
             yield return new WaitForSeconds(cycleLength / 6);
