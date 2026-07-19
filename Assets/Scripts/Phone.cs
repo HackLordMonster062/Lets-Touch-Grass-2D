@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class Phone : MonoBehaviour {
-    [SerializeField] float growthRate;
+public class Phone : Obstacle {
+    [Tooltip("[seconds until full screen cover")]
+    [SerializeField] float growthPace;
     [SerializeField] Vector3 maxPos;
     [SerializeField] Vector3 maxScale;
 
@@ -12,35 +14,33 @@ public class Phone : MonoBehaviour {
     Vector3 _targetPos;
     Vector3 _targetScale;
 
-    void Start() {
-        
-    }
+	private void Awake() {
+        _startPos = transform.position;
+        _startScale = transform.localScale;
+	}
 
-    void Update() {
-        transform.localScale += new Vector3(growthRate, growthRate, growthRate);
-        transform.position = Vector3.Lerp(transform.position, Vector3.zero, moveRate);
-    }
-
-    public void FillScreen() {
+	public override void Enter() {
         _targetPos = maxPos;
         _targetScale = maxScale;
 
         StartCoroutine(LerpToScale());
     }
 
-    public void TurnOff() {
+    public override void Exit() {
+        base.Exit();
+
         _targetPos = _startPos;
         _targetScale = _startScale;
-    }
+	}
 
     IEnumerator LerpToScale() {
         float progress = 0;
 
         while (progress < 1) {
-            transform.localScale = Vector3.Lerp(transform.localScale, _targetScale, progress);
-            transform.position = Vector3.Lerp(transform.position, _targetPos, progress);
+            transform.localScale = Vector3.Lerp(_startScale, _targetScale, progress);
+            transform.position = Vector3.Lerp(_startPos, _targetPos, progress);
 
-            progress += growthRate * Time.deltaTime;
+            progress += Time.deltaTime / growthPace;
 
             yield return null;
         }

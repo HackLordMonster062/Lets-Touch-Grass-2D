@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class Window : MonoBehaviour {
+public class Window : Obstacle {
     [SerializeField] Color dayColor;
     [SerializeField] Color nightColor;
     [SerializeField] Color sunColor;
@@ -14,10 +15,8 @@ public class Window : MonoBehaviour {
 
     SpriteRenderer _renderer;
 
-    void Start() {
+	void Start() {
         _renderer = GetComponent<SpriteRenderer>();
-
-        StartCoroutine(DayNightCycle());
     }
 
     void Update() {
@@ -28,26 +27,14 @@ public class Window : MonoBehaviour {
         }
     }
 
-    IEnumerator DayNightCycle() {
-        while (true) {
-            _renderer.color = dayColor;
+    public override void Enter() {
+		sunAnimator.SetTrigger("Rise");
+		IsSunVisible = true;
+	}
 
-            yield return new WaitForSeconds(cycleLength / 6);
+    public override void Exit() {
+		base.Exit();
 
-            //_renderer.color = sunColor;
-            sunAnimator.SetTrigger("Rise");
-            IsSunVisible = true;
-
-            yield return new WaitForSeconds(cycleLength / 6);
-
-            //_renderer.color = dayColor;
-            IsSunVisible = false;
-
-            yield return new WaitForSeconds(cycleLength / 6);
-
-            _renderer.color = nightColor;
-
-            yield return new WaitForSeconds(cycleLength / 2);
-        }
-    }
+		IsSunVisible = false;
+	}
 }

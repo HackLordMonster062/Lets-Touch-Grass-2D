@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Grass : Singleton<Grass> {
@@ -11,8 +12,12 @@ public class Grass : Singleton<Grass> {
     Color _finalColor;
     SpriteRenderer _renderer;
 
+    int _nextGrowth;
+
     public float Growth { get; private set; }
     [field: SerializeField] public float Health { get; private set; }
+
+    public event Action<int> OnGrowthStageChanged;
 
     protected override void Awake() {
         base.Awake();
@@ -33,6 +38,11 @@ public class Grass : Singleton<Grass> {
         }
 
         Growth += Time.deltaTime / growthPace * (Health / startingHealth);
+
+        if (Growth >= _nextGrowth)
+            OnGrowthStageChanged?.Invoke((int)Growth);
+
+        _nextGrowth = (int)Growth + 1;
 
         ShowGrowth();
 

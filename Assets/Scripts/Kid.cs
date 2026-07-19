@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Kid : MonoBehaviour {
+public class Kid : Obstacle {
     [SerializeField] Ball ball;
     [SerializeField] int hits;
 
@@ -12,10 +13,13 @@ public class Kid : MonoBehaviour {
 
 	private void Awake() {
         _anim = GetComponent<Animator>();
+
+		gameObject.SetActive(false);
+		ball.gameObject.SetActive(false);
 	}
 
 	void Start() {
-        Show();
+        
     }
 
     void Update() {
@@ -38,7 +42,7 @@ public class Kid : MonoBehaviour {
         }
 	}
 
-    public void Show() {
+    public override void Enter() {
         gameObject.SetActive(true);
         ball.gameObject.SetActive(true);
 
@@ -51,8 +55,10 @@ public class Kid : MonoBehaviour {
 		ball.Shoot(Grass.instance.transform.position);
 	}
 
-    public void Exit() {
-        _isActive = false;
+    public override void Exit() {
+		base.Exit();
+
+		_isActive = false;
         _anim.enabled = true;
 		_anim.SetTrigger("Exit");
 	}

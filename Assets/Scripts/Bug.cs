@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class Bug : MonoBehaviour {
+public class Bug : Obstacle {
     [SerializeField] float flightSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float randomRotationAmount;
@@ -8,12 +9,15 @@ public class Bug : MonoBehaviour {
     [SerializeField] float arrivalDistance;
     [SerializeField] float damage;
 
+    Vector3 _startPosition;
+
     Vector3 _position;
     Vector3 _offset;
 
-    void Awake() {
-        _offset = new Vector3(rotationRadius, 0, 0);
-        _position = transform.position;
+	void Awake() {
+        _startPosition = transform.position;
+
+        gameObject.SetActive(false);
     }
 
     void Update() {
@@ -42,5 +46,18 @@ public class Bug : MonoBehaviour {
 
     public void Swat() {
         Destroy(gameObject);
+    }
+
+    public override  void Enter() {
+		_offset = new Vector3(rotationRadius, 0, 0);
+		_position = _startPosition;
+
+		gameObject.SetActive(true);
+	}
+
+	public override void Exit() {
+		base.Exit();
+
+		gameObject.SetActive(false);
     }
 }
