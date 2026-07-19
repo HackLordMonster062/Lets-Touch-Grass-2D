@@ -44,11 +44,17 @@ TagManager:
   - name: BlanketWindow
     uniqueID: 3127793543
     locked: 0
+  - name: Pipe
+    uniqueID: 404558745
+    locked: 0
   - name: KidBall
     uniqueID: 1325935533
     locked: 0
   - name: BugSwatter
     uniqueID: 2513499
+    locked: 0
+  - name: Phone
+    uniqueID: 973004917
     locked: 0
   m_RenderingLayers:
   - Default
