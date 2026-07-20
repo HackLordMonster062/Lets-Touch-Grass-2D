@@ -1,28 +1,45 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Pipe : Obstacle {
-    [SerializeField] ParticleSystem tipDripping;
-    [SerializeField] ParticleSystem holeDripping;
+    [SerializeField] Sprite fixedSprite;
+    [SerializeField] Sprite rippedSprite;
+    [SerializeField] GameObject droplet;
+    [SerializeField] Transform drippingPoint;
+    [SerializeField] Transform holePoint;
+    [SerializeField] float drippingPace;
 
-	void Start() {
-		holeDripping.Stop();
-		tipDripping.Play();
+    SpriteRenderer _renderer;
+
+	private void Awake() {
+        _renderer = GetComponent<SpriteRenderer>();
+        _renderer.sprite = fixedSprite;
 	}
 
-    void Update() {
-        
-    }
+	void Start() {
+        StartCoroutine(StartDripping(drippingPoint.position));
+	}
 
     public override void Enter() {
-        tipDripping.Stop();
-        holeDripping.Play();
-    }
+        StopAllCoroutines();
+		StartCoroutine(StartDripping(holePoint.position));
+		_renderer.sprite = rippedSprite;
+	}
 
     public override void Exit() {
         base.Exit();
 
-        holeDripping.Stop();
-		tipDripping.Play();
+        StopAllCoroutines();
+		StartCoroutine(StartDripping(drippingPoint.position));
+		_renderer.sprite = fixedSprite;
 	}
+
+    IEnumerator StartDripping(Vector3 point) {
+        while (true) {
+            Instantiate(droplet, point, Quaternion.identity);
+
+            yield return new WaitForSeconds(drippingPace);
+        }
+    }
 }
