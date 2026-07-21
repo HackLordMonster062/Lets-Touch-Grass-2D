@@ -27,10 +27,11 @@ public class DifficultyManager : Singleton<DifficultyManager> {
 	}
 
 	void Update() {
-        foreach (var (obstacle, time) in _timers) {
+        foreach (var (obstacle, time) in _timers.ToArray()) {
             if (Time.time >= time) {
                 obstacle.obstacle.Enter();
-            }
+				_timers.Remove(obstacle);
+			}
         }
     }
 

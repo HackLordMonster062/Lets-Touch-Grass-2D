@@ -1,9 +1,24 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class Pickup : MonoBehaviour {
 	Transform _currHolding;
+
+	InputMap _input;
+
+	private void Awake() {
+		_input = new();
+		_input.Player.Attack.started += OnInteract;
+		_input.Player.Attack.canceled += OnInteract;
+	}
+
+	private void OnEnable() {
+		_input.Player.Enable();
+	}
+
+	private void OnDisable() {
+		_input.Player.Disable();
+	}
 
 	private void Update() {
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue()).Modify(z: 1);

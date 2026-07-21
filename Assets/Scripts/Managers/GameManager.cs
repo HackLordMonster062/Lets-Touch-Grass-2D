@@ -9,6 +9,15 @@ public class GameManager : Singleton<GameManager> {
 	public static event Action<GameState> OnBeforeStateChange;
 	public static event Action<GameState> OnAfterStateChange;
 
+	InputMap _input;
+
+	protected override void Awake() {
+		base.Awake();
+
+		_input = new();
+		_input.UI.Enable();
+	}
+
 	void Start() {
 		ChangeState(GameState.Initiating);
 
@@ -20,7 +29,9 @@ public class GameManager : Singleton<GameManager> {
     }
 
     void Update() {
-        
+		if (_input.UI.Cancel.WasPressedThisFrame()) {
+			TogglePause();
+		}
     }
 
 	public void TogglePause(bool pause) {
