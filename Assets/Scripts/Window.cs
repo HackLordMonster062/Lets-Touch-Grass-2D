@@ -3,11 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 public class Window : Obstacle {
-    [SerializeField] Color dayColor;
-    [SerializeField] Color nightColor;
-    [SerializeField] Color sunColor;
     [SerializeField] Animator sunAnimator;
-    [SerializeField] float cycleLength;
     [Tooltip("Damage per second while the sun is visible")]
     [SerializeField] float sunDamage;
 
@@ -30,6 +26,8 @@ public class Window : Obstacle {
     public override void Enter() {
 		sunAnimator.SetTrigger("Rise");
 		IsSunVisible = true;
+
+        AudioManager.instance.PlaySound("Hum");
 	}
 
     public override void Exit() {

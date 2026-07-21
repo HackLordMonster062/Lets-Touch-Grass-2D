@@ -31,6 +31,8 @@ public class Swatter : MonoBehaviour, IPickup {
 			bug.Swat();
 		}
 
+		AudioManager.instance.PlaySound("Swat");
+
 		_isPickedUp = false;
 	}
 }

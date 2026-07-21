@@ -23,10 +23,14 @@ public class Blanket : MonoBehaviour, IPickup {
 	public void Pickup() {
 		transform.localScale = pickedSize;
 		_isPickedUp = true;
+
+		AudioManager.instance.PlaySound("BlanketPickUp");
 	}
 
 	public void Release() {
 		transform.localScale = releasedSize;
 		_isPickedUp = false;
+
+		AudioManager.instance.PlaySound("BlanketRelease");
 	}
 }

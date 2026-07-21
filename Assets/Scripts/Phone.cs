@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Phone : Obstacle {
     [Tooltip("[seconds until full screen cover")]
-    [SerializeField] float growthPace;
-    [SerializeField] float shrinkPace;
+    [SerializeField] float growthDuration;
+    [SerializeField] float shrinkDuration;
     [SerializeField] Vector3 maxPos;
     [SerializeField] Vector3 maxScale;
 
@@ -34,11 +34,13 @@ public class Phone : Obstacle {
     IEnumerator LerpToScale() {
         float progress = 0;
 
+        AudioManager.instance.FadeOut(growthDuration * 3 / 4);
+
         while (progress < 1) {
             transform.localScale = Vector3.Lerp(_startScale, maxScale, progress);
             transform.position = Vector3.Lerp(_startPos, maxPos, progress);
 
-            progress += Time.deltaTime / growthPace;
+            progress += Time.deltaTime / growthDuration;
 
             yield return null;
         }
@@ -47,6 +49,8 @@ public class Phone : Obstacle {
 	IEnumerator LerpToStart() {
 		float progress = 0;
 
+        AudioManager.instance.FadeIn(shrinkDuration);
+
         Vector3 startPos = transform.position;
         Vector3 startScale = transform.localScale;
 
@@ -54,7 +58,7 @@ public class Phone : Obstacle {
 			transform.localScale = Vector3.Lerp(startScale, _startScale, progress);
 			transform.position = Vector3.Lerp(startPos, _startPos, progress);
 
-			progress += Time.deltaTime / shrinkPace;
+			progress += Time.deltaTime / shrinkDuration;
 
 			yield return null;
 		}

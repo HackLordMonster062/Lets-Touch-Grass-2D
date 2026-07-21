@@ -45,5 +45,7 @@ public class Ball : MonoBehaviour {
 		_rb.linearVelocity = vX + Vector3.up * vY;
 
 		_rb.AddTorque(Random.Range(-shootingTorque, shootingTorque));
+
+		AudioManager.instance.PlaySound("Hit");
 	}
 }

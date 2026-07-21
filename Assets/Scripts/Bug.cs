@@ -45,7 +45,10 @@ public class Bug : Obstacle {
     }
 
     public void Swat() {
-        Destroy(gameObject);
+        AudioManager.instance.PlaySound("Splat");
+        AudioManager.instance.StopSound("Buzz");
+
+        Exit();
     }
 
     public override  void Enter() {
@@ -53,6 +56,8 @@ public class Bug : Obstacle {
 		_position = _startPosition;
 
 		gameObject.SetActive(true);
+
+        AudioManager.instance.PlaySoundPersistent("Buzz");
 	}
 
 	public override void Exit() {

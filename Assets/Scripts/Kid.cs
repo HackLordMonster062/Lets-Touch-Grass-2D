@@ -53,17 +53,21 @@ public class Kid : Obstacle {
         _isActive = true;
         _anim.enabled = false;
 		ball.Shoot(Grass.instance.transform.position);
+
+        AudioManager.instance.PlaySound("Giggle");
 	}
 
-    public override void Exit() {
+	public override void Exit() {
 		base.Exit();
 
 		_isActive = false;
         _anim.enabled = true;
 		_anim.SetTrigger("Exit");
+
+		AudioManager.instance.PlaySound("Giggle");
 	}
 
-    public void Hide() {
+	public void Hide() {
 		gameObject.SetActive(false);
 		ball.gameObject.SetActive(false);
 	}

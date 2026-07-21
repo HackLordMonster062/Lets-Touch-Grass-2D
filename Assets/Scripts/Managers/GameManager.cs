@@ -1,13 +1,71 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class GameManager : MonoBehaviour {
-	
+public class GameManager : Singleton<GameManager> {
 
-    void Start() {
-        
+	public GameState State { get; private set; }
+
+	public static event Action<GameState> OnBeforeStateChange;
+	public static event Action<GameState> OnAfterStateChange;
+
+	void Start() {
+		ChangeState(GameState.Initiating);
+
+		PlayerPrefs.SetFloat("MusicVolume", 1);
+		PlayerPrefs.SetFloat("SFXVolume", 1);
+		PlayerPrefs.SetInt("SoundOn", 1);
+
+		ChangeState(GameState.Playing);
     }
 
     void Update() {
         
     }
+
+	public void TogglePause(bool pause) {
+		if (!pause) {
+			ChangeState(GameState.Playing);
+		} else {
+			ChangeState(GameState.Paused);
+		}
+	}
+
+	public void TogglePause() {
+		if (State == GameState.Playing) {
+			ChangeState(GameState.Paused);
+		} else if (State == GameState.Paused) {
+			ChangeState(GameState.Playing);
+		}
+	}
+
+	public void ChangeState(GameState newState) {
+		OnBeforeStateChange?.Invoke(newState);
+
+		State = newState;
+		switch (newState) {
+			case GameState.Initiating:
+				break;
+			case GameState.Paused:
+				Time.timeScale = 0;
+
+				break;
+			case GameState.Playing:
+				Time.timeScale = 1;
+
+				break;
+		}
+
+		OnAfterStateChange?.Invoke(newState);
+	}
+
+	public void OnCancel(InputValue value) {
+		TogglePause();
+	}
+}
+
+public enum GameState {
+	Initiating,
+	Paused,
+	Playing
 }
