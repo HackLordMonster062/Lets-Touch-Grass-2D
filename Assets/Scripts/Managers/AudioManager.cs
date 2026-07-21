@@ -29,7 +29,8 @@ public class AudioManager : Singleton<AudioManager> {
 			sfxSource.mute = true;
 		}
 
-		SetVolume(PlayerPrefs.GetFloat("MusicVolume"), PlayerPrefs.GetFloat("SFXVolume"));
+		SetVolumeMusic(PlayerPrefs.GetFloat("MusicVolume"));
+		SetVolumeSFX(PlayerPrefs.GetFloat("SFXVolume"));
 
 		musicSource.Play();
 	}
@@ -77,9 +78,12 @@ public class AudioManager : Singleton<AudioManager> {
 		}
 	}
 
-	public void SetVolume(float musicVolume, float sfxVolume) {
-		musicSource.volume = musicVolume;
+	public void SetVolumeSFX(float sfxVolume) {
 		sfxSource.volume = sfxVolume;
+	}
+
+	public void SetVolumeMusic(float musicVolume) {
+		musicSource.volume = musicVolume;
 	}
 
 	public void FadeOut(float duration) {

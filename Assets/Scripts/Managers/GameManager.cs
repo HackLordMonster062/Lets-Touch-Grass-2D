@@ -40,14 +40,12 @@ public class GameManager : Singleton<GameManager> {
 		} else {
 			ChangeState(GameState.Paused);
 		}
+
+		UIManager.instance.TogglePause(pause);
 	}
 
 	public void TogglePause() {
-		if (State == GameState.Playing) {
-			ChangeState(GameState.Paused);
-		} else if (State == GameState.Paused) {
-			ChangeState(GameState.Playing);
-		}
+		TogglePause(GameState.Paused != State);
 	}
 
 	public void ChangeState(GameState newState) {
