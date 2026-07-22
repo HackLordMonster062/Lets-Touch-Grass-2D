@@ -41,8 +41,7 @@ public class Pickup : MonoBehaviour {
 		Collider2D collider = Physics2D.OverlapPoint(mousePos);
 
 		if (collider != null && collider.TryGetComponent(out IPickup pickup)) {
-			if (context.started) {
-				pickup.Pickup();
+			if (context.started && pickup.Pickup()) {
 				_currHolding = collider.transform;
 			}
 		}

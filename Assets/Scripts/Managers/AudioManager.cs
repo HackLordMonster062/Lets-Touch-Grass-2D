@@ -14,7 +14,9 @@ public class AudioManager : Singleton<AudioManager> {
 
 	public bool IsOn { get; private set; }
 
-	private void Start() {
+	protected override void Awake() {
+		base.Awake();
+
 		GameManager.OnBeforeStateChange += Initiate;
 	}
 
@@ -45,16 +47,24 @@ public class AudioManager : Singleton<AudioManager> {
 	public void PlaySound(string clipName) {
 		if (_sfxDict.TryGetValue(clipName, out AudioClip clip)) {
 			sfxSource.PlayOneShot(clip);
+		} else {
+			print($"Sound {clipName} not found");
 		}
 	}
 
 	public void PlaySoundPersistent(string clipName) {
 		if (!_persistentSfxSources.TryGetValue(clipName, out AudioSource source)) {
-			source = new GameObject().AddComponent<AudioSource>();
-			source.transform.parent = transform;
+			if (_sfxDict.TryGetValue(clipName, out AudioClip clip)) {
+				source = new GameObject().AddComponent<AudioSource>();
+				source.transform.parent = transform;
 
-			source.loop = true;
-			source.clip = _sfxDict[clipName];
+				source.loop = true;
+				source.clip = clip;
+			} else {
+				print($"Sound {clipName} not found");
+
+				return;
+			}
 
 			_persistentSfxSources[clipName] = source;
 		}
@@ -63,7 +73,10 @@ public class AudioManager : Singleton<AudioManager> {
 	}
 
 	public void StopSound(string clipName) {
-		_persistentSfxSources[clipName].Stop();
+		if (_persistentSfxSources.ContainsKey(clipName))
+			_persistentSfxSources[clipName].Stop();
+		else
+			print($"Sound {clipName} not found");
 	}
 
 	public void ToggleMusic(bool play = true) {

@@ -20,11 +20,13 @@ public class Blanket : MonoBehaviour, IPickup {
 		transform.position = Vector3.Lerp(transform.position, _startPosition, Time.deltaTime * 10);
 	}
 
-	public void Pickup() {
+	public bool Pickup() {
 		transform.localScale = pickedSize;
 		_isPickedUp = true;
 
 		AudioManager.instance.PlaySound("BlanketPickUp");
+
+		return true;
 	}
 
 	public void Release() {

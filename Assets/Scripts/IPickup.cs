@@ -1,6 +1,6 @@
 using UnityEngine;
 
 public interface IPickup {
-	public void Pickup();
+	public bool Pickup();
 	public void Release();
 }
