@@ -16,7 +16,7 @@ TagManager:
   - Bug
   - Environment
   - Droplet
-  - 
+  - Pipe
   - 
   - 
   - 
@@ -40,6 +40,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Environment
+    uniqueID: 2781129487
     locked: 0
   - name: BlanketWindow
     uniqueID: 3127793543

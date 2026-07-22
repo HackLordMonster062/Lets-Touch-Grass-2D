@@ -9,12 +9,23 @@ public class Pipe : Obstacle {
     [SerializeField] Transform drippingPoint;
     [SerializeField] Transform holePoint;
     [SerializeField] float drippingPace;
+    [SerializeField] float dryingDelay;
+    [SerializeField] float dryingDamage;
 
     SpriteRenderer _renderer;
+
+    float _breakingTime;
+    bool _isBroken;
 
 	private void Awake() {
         _renderer = GetComponent<SpriteRenderer>();
         _renderer.sprite = fixedSprite;
+	}
+
+	private void Update() {
+		if (_isBroken && _breakingTime + dryingDelay <= Time.time) {
+            Grass.instance.Damage(dryingDamage * Time.deltaTime);
+        }
 	}
 
 	void Start() {
@@ -25,6 +36,9 @@ public class Pipe : Obstacle {
         StopAllCoroutines();
 		StartCoroutine(StartDripping(holePoint.position));
 		_renderer.sprite = rippedSprite;
+
+        _breakingTime = Time.time;
+        _isBroken = true;
 	}
 
     public override void Exit() {
@@ -33,6 +47,8 @@ public class Pipe : Obstacle {
         StopAllCoroutines();
 		StartCoroutine(StartDripping(drippingPoint.position));
 		_renderer.sprite = fixedSprite;
+
+        _isBroken = false;
 	}
 
     IEnumerator StartDripping(Vector3 point) {

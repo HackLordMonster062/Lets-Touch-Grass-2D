@@ -40,7 +40,7 @@ public class Swatter : MonoBehaviour, IPickup {
 		Collider2D collider = Physics2D.OverlapCircle(transform.position, swattingRadius, bugLayer);
 
 		if (collider != null && collider.TryGetComponent(out Bug bug)) {
-			bug.Swat();
+			bug.Exit();
 		}
 
 		AudioManager.instance.PlaySound("Swat");

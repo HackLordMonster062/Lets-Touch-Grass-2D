@@ -7,15 +7,20 @@ public class AudioManager : Singleton<AudioManager> {
 	[SerializeField] AudioSource musicSource;
 	[SerializeField] AudioSource sfxSource;
 	[SerializeField] AudioMixer mixer;
-	[SerializeField] List<AudioClip> soundEffects;
+	[SerializeField] List<AudioClip> soundEffects; 
 
 	Dictionary<string, AudioClip> _sfxDict;
 	Dictionary<string, AudioSource> _persistentSfxSources;
 
 	public bool IsOn { get; private set; }
 
+	AudioMixerGroup _masterGroup;
+
 	protected override void Awake() {
 		base.Awake();
+
+		AudioMixerGroup[] groups = mixer.FindMatchingGroups("Master");
+		_masterGroup = groups[0];
 
 		GameManager.OnBeforeStateChange += Initiate;
 	}
@@ -59,6 +64,7 @@ public class AudioManager : Singleton<AudioManager> {
 				source.transform.parent = transform;
 
 				source.loop = true;
+				source.outputAudioMixerGroup = _masterGroup;
 				source.clip = clip;
 			} else {
 				print($"Sound {clipName} not found");

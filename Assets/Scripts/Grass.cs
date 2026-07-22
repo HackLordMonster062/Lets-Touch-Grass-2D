@@ -13,8 +13,10 @@ public class Grass : Singleton<Grass> {
     SpriteRenderer _renderer;
 
     int _nextGrowth;
+    bool _wasDamaged;
+    bool _isFullyGrown;
 
-    public float Growth { get; private set; }
+	public float Growth { get; private set; }
     [field: SerializeField] public float Health { get; private set; }
 
     public event Action<int> OnGrowthStageChanged;
@@ -32,23 +34,27 @@ public class Grass : Singleton<Grass> {
     }
 
     void Update() {
-        if (Health < startingHealth) {
+        if (!_wasDamaged && Health < startingHealth) {
             Health += regenerationRate * Time.deltaTime;
             Health = Mathf.Clamp(Health, 0, startingHealth);
         }
 
-        Growth += Time.deltaTime / growthPace * (Health / startingHealth);
+        if (!_isFullyGrown) {
+            Growth += Time.deltaTime / growthPace * (Health / startingHealth);
 
-        if (Growth >= _nextGrowth)
-            OnGrowthStageChanged?.Invoke((int)Growth);
+            if (Growth >= _nextGrowth)
+                OnGrowthStageChanged?.Invoke((int)Growth);
 
-        _nextGrowth = (int)Growth + 1;
+            _nextGrowth = (int)Growth + 1;
+        }
 
         ShowGrowth();
 
         if (Growth >= growthStages.Length - 1) {
             FullyGrown();
         }
+
+        _wasDamaged = false;
     }
 
     void ShowGrowth() {
@@ -61,10 +67,12 @@ public class Grass : Singleton<Grass> {
     }
 
     void FullyGrown() {
-
+        _isFullyGrown = true;
     }
 
     public void Damage(float damage) {
+        _wasDamaged = true;
+
         Health -= damage;
 
         if (Health <= 0) {
