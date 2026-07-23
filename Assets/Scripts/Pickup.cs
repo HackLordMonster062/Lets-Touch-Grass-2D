@@ -6,10 +6,13 @@ public class Pickup : MonoBehaviour {
 
 	InputMap _input;
 
+	Vector2 _pointerPosition;
+
 	private void Awake() {
 		_input = new();
 		_input.Player.Attack.started += OnInteract;
 		_input.Player.Attack.canceled += OnInteract;
+		_input.Player.PointerPosition.performed += (context) => _pointerPosition = context.ReadValue<Vector2>();
 	}
 
 	private void OnEnable() {
@@ -21,7 +24,7 @@ public class Pickup : MonoBehaviour {
 	}
 
 	private void Update() {
-		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue()).Modify(z: 1);
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(_pointerPosition).Modify(z: 1);
 
 		if (_currHolding != null) {
 			_currHolding.position = mousePos;
@@ -29,7 +32,7 @@ public class Pickup : MonoBehaviour {
 	}
 
 	public void OnInteract(InputAction.CallbackContext context) {
-		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue()).Modify(z: 1);
+		Vector3 mousePos = Camera.main.ScreenToWorldPoint(_pointerPosition).Modify(z: 1);
 
 		if (context.canceled && _currHolding != null) {
 			_currHolding.GetComponent<IPickup>().Release();

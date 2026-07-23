@@ -27,7 +27,6 @@ public class Window : Obstacle {
 
     public override void Enter() {
 		sunAnimator.SetTrigger("Rise");
-		IsSunVisible = true;
 
         AudioManager.instance.PlaySound("Hum");
 	}
@@ -37,4 +36,12 @@ public class Window : Obstacle {
 
 		IsSunVisible = false;
 	}
+
+    public void SunVisible() {
+        IsSunVisible = true;
+    }
+
+    public void SunHidden() {
+        IsSunVisible = false;
+    }
 }

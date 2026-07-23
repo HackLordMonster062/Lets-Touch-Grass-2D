@@ -1,14 +1,11 @@
 using UnityEngine;
 
 public class Droplet : MonoBehaviour {
-    [SerializeField] LayerMask grassMask;
-    [SerializeField] LayerMask bucketMask;
-
 	private void OnCollisionEnter2D(Collision2D collision) {
-		if (collision.gameObject.layer == grassMask) {
+		if (collision.collider.CompareTag("Grass")) {
 			AudioManager.instance.PlaySound("DripGrass");
 		}
-		if (collision.gameObject.layer == bucketMask) {
+		if (collision.collider.CompareTag("Bucket")) {
 			AudioManager.instance.PlaySound("DripBucket");
 		}
 
