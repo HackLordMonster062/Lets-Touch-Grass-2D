@@ -18,7 +18,9 @@ public class Window : Obstacle {
     void Update() {
         Collider2D collider = Physics2D.OverlapPoint(transform.position);
 
-		if (IsSunVisible && (collider == null || !collider.TryGetComponent(out Blanket blanket))) {
+        Blanket blanket = collider?.GetComponentInParent<Blanket>();
+
+		if (IsSunVisible && (collider == null || blanket == null)) {
             Grass.instance.Damage(sunDamage * Time.deltaTime);
         }
     }

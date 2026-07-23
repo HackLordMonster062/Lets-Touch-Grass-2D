@@ -9,7 +9,10 @@ public class Phone : Obstacle {
     [SerializeField] Vector3 maxPos;
     [SerializeField] Vector3 maxScale;
     [SerializeField] SpriteRenderer fadeOut;
+    [SerializeField] SpriteRenderer graphics;
     [SerializeField] float maxOpacity;
+    [SerializeField] Sprite onSprite;
+    [SerializeField] Sprite offSprite;
 
     Vector3 _startPos;
     Vector3 _startScale;
@@ -22,11 +25,15 @@ public class Phone : Obstacle {
 	}
 
 	public override void Enter() {
+        graphics.sprite = onSprite;
+
         StartCoroutine(LerpToScale());
     }
 
     public override void Exit() {
         base.Exit();
+
+        graphics.sprite = offSprite;
 
         StopAllCoroutines();
 

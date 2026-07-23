@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6ab5aafabf2c38041b6a1dff79639ffd
+guid: 2edd6a85497a21d458b5bb2a2a9cec5e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6527221883591575090
-    second: duct_tape_0
+      213: 3977125322953067361
+    second: fly_dead_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 850
+  spritePixelsToUnits: 700
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,23 +139,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: duct_tape_0
+      name: fly_dead_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1361
-        height: 943
+        x: 69
+        y: 124
+        width: 706
+        height: 865
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ec93e529746aa65a0800000000000000
-      internalID: -6527221883591575090
+      spriteID: 16b04d5d866913730800000000000000
+      internalID: 3977125322953067361
       vertices: []
       indices: 
       edges: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0be30717e0d834045903fb94946c0f81
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      duct_tape_0: -6527221883591575090
+      fly_dead_0: 3977125322953067361
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

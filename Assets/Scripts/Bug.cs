@@ -64,6 +64,8 @@ public class Bug : Obstacle {
 		_position = _startPosition;
 		transform.position = _position + _offset;
 
+        _renderer.sprite = defaultSprite;
+
 		gameObject.SetActive(true);
 
         AudioManager.instance.PlaySoundPersistent("Buzz");

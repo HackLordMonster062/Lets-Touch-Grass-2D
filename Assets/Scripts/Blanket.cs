@@ -1,10 +1,8 @@
 using UnityEngine;
 
 public class Blanket : MonoBehaviour, IPickup {
-	[SerializeField] Vector3 releasedSize;
-	[SerializeField] Vector3 pickedSize;
-	[SerializeField] Sprite releasedSprite;
-	[SerializeField] Sprite pickedSprite;
+	[SerializeField] GameObject releasedSprite;
+	[SerializeField] GameObject pickedSprite;
 
 	Vector3 _startPosition;
 
@@ -21,7 +19,8 @@ public class Blanket : MonoBehaviour, IPickup {
 	}
 
 	public bool Pickup() {
-		transform.localScale = pickedSize;
+		releasedSprite.SetActive(false);
+		pickedSprite.SetActive(true);
 		_isPickedUp = true;
 
 		AudioManager.instance.PlaySound("BlanketPickUp");
@@ -30,7 +29,8 @@ public class Blanket : MonoBehaviour, IPickup {
 	}
 
 	public void Release() {
-		transform.localScale = releasedSize;
+		releasedSprite.SetActive(true);
+		pickedSprite.SetActive(false);
 		_isPickedUp = false;
 
 		AudioManager.instance.PlaySound("BlanketRelease");
