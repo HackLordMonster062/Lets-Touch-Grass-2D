@@ -9,7 +9,6 @@ public class Grass : Singleton<Grass> {
     [SerializeField] float regenerationRate;
     [SerializeField] Sprite[] growthStages;
 
-    Color _finalColor;
     SpriteRenderer _renderer;
 
     int _nextGrowth;
@@ -28,9 +27,6 @@ public class Grass : Singleton<Grass> {
         Growth = 0;
 
         _renderer = GetComponent<SpriteRenderer>();
-        _finalColor = _renderer.color;
-
-        _renderer.color = Color.black;
     }
 
     void Update() {
@@ -58,8 +54,7 @@ public class Grass : Singleton<Grass> {
     }
 
     void ShowGrowth() {
-        _renderer.color = Color.Lerp(Color.black, _finalColor, Mathf.Floor(Growth) / growthStages.Length);
-        //_renderer.sprite = growthStages[Mathf.Clamp((int)Growth, 0, growthStages.Length - 1)];
+        _renderer.sprite = growthStages[Mathf.Clamp((int)Growth, 0, growthStages.Length - 1)];
     }
 
     void Die() {

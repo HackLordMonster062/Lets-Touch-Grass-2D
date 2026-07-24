@@ -593,107 +593,191 @@ MonoBehaviour:
   difficulties:
   - obstacles:
     - id: Sun
-      isPresent: 1
+      isIntroduced: 1
       cooldownMin: 20
       cooldownMax: 20
     - id: Ball
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 0
       cooldownMax: 0
     - id: Bug
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 0
       cooldownMax: 0
     - id: Pipe
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 4
       cooldownMax: 4
     - id: Phone
-      isPresent: 1
+      isIntroduced: 1
       cooldownMin: 13
       cooldownMax: 17
   - obstacles:
     - id: Sun
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 20
       cooldownMax: 20
     - id: Ball
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 0
       cooldownMax: 0
     - id: Bug
-      isPresent: 1
+      isIntroduced: 1
       cooldownMin: 15
       cooldownMax: 20
     - id: Pipe
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 0
       cooldownMax: 0
     - id: Phone
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 13
       cooldownMax: 17
   - obstacles:
     - id: Sun
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 20
       cooldownMax: 20
     - id: Ball
-      isPresent: 0
+      isIntroduced: 0
       cooldownMin: 0
       cooldownMax: 0
     - id: Bug
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Pipe
-      isPresent: 1
+      isIntroduced: 1
       cooldownMin: 15
       cooldownMax: 20
     - id: Phone
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 13
       cooldownMax: 17
   - obstacles:
     - id: Sun
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 20
       cooldownMax: 20
     - id: Ball
-      isPresent: 1
+      isIntroduced: 1
       cooldownMin: 15
       cooldownMax: 20
     - id: Bug
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Pipe
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Phone
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 8
       cooldownMax: 13
   - obstacles:
     - id: Sun
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 20
       cooldownMax: 20
     - id: Ball
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Bug
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Pipe
-      isPresent: 1
+      isIntroduced: 0
       cooldownMin: 15
       cooldownMax: 20
     - id: Phone
-      isPresent: 1
+      isIntroduced: 0
+      cooldownMin: 8
+      cooldownMax: 13
+  - obstacles:
+    - id: Sun
+      isIntroduced: 0
+      cooldownMin: 20
+      cooldownMax: 20
+    - id: Ball
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Bug
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Pipe
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Phone
+      isIntroduced: 0
+      cooldownMin: 8
+      cooldownMax: 13
+  - obstacles:
+    - id: Sun
+      isIntroduced: 0
+      cooldownMin: 20
+      cooldownMax: 20
+    - id: Ball
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Bug
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Pipe
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Phone
+      isIntroduced: 0
+      cooldownMin: 8
+      cooldownMax: 13
+  - obstacles:
+    - id: Sun
+      isIntroduced: 0
+      cooldownMin: 20
+      cooldownMax: 20
+    - id: Ball
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Bug
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Pipe
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Phone
+      isIntroduced: 0
+      cooldownMin: 8
+      cooldownMax: 13
+  - obstacles:
+    - id: Sun
+      isIntroduced: 0
+      cooldownMin: 20
+      cooldownMax: 20
+    - id: Ball
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Bug
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Pipe
+      isIntroduced: 0
+      cooldownMin: 15
+      cooldownMax: 20
+    - id: Phone
+      isIntroduced: 0
       cooldownMin: 8
       cooldownMax: 13
   obstacles:
@@ -3667,11 +3751,15 @@ MonoBehaviour:
   growthPace: 25
   regenerationRate: 5
   growthStages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2837257013642637027, guid: 9fb0703c5629d3e43a603b93357e301d, type: 3}
+  - {fileID: -6268241297508726992, guid: f18bb33b1bc5dfc4f9cd51d508e501f0, type: 3}
+  - {fileID: -3334064962437865907, guid: d1bc8c2a379362a45ad346e4a2e02822, type: 3}
+  - {fileID: 4451806321468291538, guid: ee26038641d19cf49ad090b41d49389d, type: 3}
+  - {fileID: 8799610684981697852, guid: b7c559f5d03edd04686b52af41c2ffea, type: 3}
+  - {fileID: 3778904795405148058, guid: 765de3f028c5c6e4aae88aafd80f91db, type: 3}
+  - {fileID: 5548359977560397937, guid: 5de02e395b324bf4185f37b1c14f9a57, type: 3}
+  - {fileID: 5870896096379363760, guid: 6b1302056ce1c4c48a0397c2900b28bf, type: 3}
+  - {fileID: -5290408661549559728, guid: 8a69581416bc8fd40a2c4794d7622d0e, type: 3}
   <Health>k__BackingField: 0
 --- !u!212 &1652421108
 SpriteRenderer:

@@ -38,18 +38,15 @@ public class DifficultyManager : Singleton<DifficultyManager> {
     void ResetTimer(ObstacleData obstacle) {
         ObstacleDifficultyData data = difficulties[Difficulty].GetByID(obstacle.id);
 
-        if (data.isPresent)
-            _timers[obstacle] = Time.time + Random.Range(data.cooldownMin, data.cooldownMax);
-        else if (_timers.ContainsKey(obstacle))
-            _timers.Remove(obstacle);
+        _timers[obstacle] = Time.time + Random.Range(data.cooldownMin, data.cooldownMax);
     }
 
     void UpdateDifficulty(int difficulty) {
         Difficulty = difficulty;
 
         foreach (ObstacleDifficultyData data in difficulties[difficulty].obstacles) {
-            if (data.isPresent) {
-                ObstacleData obstacle = GetObstacleByID(data.id);
+            if (data.isIntroduced) {
+				ObstacleData obstacle = GetObstacleByID(data.id);
 
 				_timers[obstacle] = Time.time + Random.Range(obstacle.entranceDelayMin, obstacle.entranceDelayMax);
 			}
@@ -73,7 +70,7 @@ struct DifficultyData {
 [Serializable]
 struct ObstacleDifficultyData {
     public string id;
-    public bool isPresent;
+    public bool isIntroduced;
     public float cooldownMin;
     public float cooldownMax;
 }
