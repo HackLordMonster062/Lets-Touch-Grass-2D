@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ball : MonoBehaviour {
-    [SerializeField] Vector3 target;
+    [SerializeField] Transform target;
     [SerializeField] float arcHeight;
     [SerializeField] float shootingSpeed;
     [SerializeField] float shootingTorque;
@@ -18,11 +18,13 @@ public class Ball : MonoBehaviour {
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject == Grass.instance.gameObject) {
 			Grass.instance.Damage(50);
+
+			Shoot(target.position);
 		}
 	}
 
 	private void OnMouseDown() {
-		Shoot(target);
+		Shoot(target.position);
 	}
 
 	public void Shoot(Vector3 target) {

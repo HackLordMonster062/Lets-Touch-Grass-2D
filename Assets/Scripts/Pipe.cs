@@ -36,6 +36,7 @@ public class Pipe : Obstacle {
         StopAllCoroutines();
 		StartCoroutine(StartDripping(holePoint.position));
 		_renderer.sprite = rippedSprite;
+        AudioManager.instance.PlaySound("HoseBreak");
 
         _breakingTime = Time.time;
         _isBroken = true;

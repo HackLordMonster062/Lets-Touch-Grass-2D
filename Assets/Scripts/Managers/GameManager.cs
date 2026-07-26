@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class GameManager : Singleton<GameManager> {
 
 	public GameState State { get; private set; }
+	public float Timer { get; private set; }
 
 	public static event Action<GameState> OnBeforeStateChange;
 	public static event Action<GameState> OnAfterStateChange;
@@ -31,6 +32,10 @@ public class GameManager : Singleton<GameManager> {
     void Update() {
 		if (_input.UI.Cancel.WasPressedThisFrame()) {
 			TogglePause();
+		}
+
+		if (State == GameState.Playing) {
+			Timer += Time.deltaTime;
 		}
     }
 
