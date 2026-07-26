@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
@@ -75,6 +76,10 @@ public class GameManager : Singleton<GameManager> {
 
 	public void OnCancel(InputValue value) {
 		TogglePause();
+	}
+
+	public void Retry() {
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }
 
