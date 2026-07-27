@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using static Unity.VisualScripting.Member;
 
 public class AudioManager : Singleton<AudioManager> {
 	[SerializeField] AudioSource musicSource;

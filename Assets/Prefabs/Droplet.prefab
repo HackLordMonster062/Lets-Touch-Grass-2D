@@ -81,8 +81,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 404558745
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayer: 2
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -868945178380921472, guid: 3bc7d6b37d0349347ac37fab332b66ad, type: 3}
   m_Color: {r: 0.18396229, g: 0.83874094, b: 1, a: 1}
@@ -180,9 +180,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0844d7561bcf64abb3ab465b188051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Droplet
-  grassMask:
-    serializedVersion: 2
-    m_Bits: 4096
-  bucketMask:
-    serializedVersion: 2
-    m_Bits: 512

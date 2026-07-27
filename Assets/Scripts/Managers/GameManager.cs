@@ -84,6 +84,12 @@ public class GameManager : Singleton<GameManager> {
 				break;
 			case GameState.Lost:
 				Time.timeScale = 0;
+				UIManager.instance.Lose(Timer);
+
+				break;
+			case GameState.Won:
+				Time.timeScale = 0;
+				UIManager.instance.Win(Timer);
 
 				break;
 		}

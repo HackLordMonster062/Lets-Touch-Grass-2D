@@ -9,10 +9,6 @@ public class HUD : MonoBehaviour {
 	private void Update() {
 		health.value = Grass.instance.Health;
 
-		timer.text = FormatTime(GameManager.instance.Timer);
-	}
-
-	string FormatTime(float time) {
-		return (time > 3600 ? $"{(int)time / 3600}:" : "") + $"{(int)time % 3600 / 60:00}:{time % 60:00.00}";
+		timer.text = UIManager.FormatTime(GameManager.instance.Timer);
 	}
 }

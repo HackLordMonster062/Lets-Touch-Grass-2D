@@ -9,12 +9,6 @@ public class Window : Obstacle {
 
     public bool IsSunVisible { get; private set; }
 
-    SpriteRenderer _renderer;
-
-	void Start() {
-        _renderer = GetComponent<SpriteRenderer>();
-    }
-
     void Update() {
 		if (GameManager.instance.State != GameState.Playing) return;
 

@@ -40,17 +40,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Window
+    uniqueID: 3127793543
+    locked: 0
+  - name: Background
+    uniqueID: 3621710491
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Environment
     uniqueID: 2781129487
     locked: 0
-  - name: BlanketWindow
-    uniqueID: 3127793543
-    locked: 0
   - name: Pipe
     uniqueID: 404558745
+    locked: 0
+  - name: Blanket
+    uniqueID: 3349171299
     locked: 0
   - name: KidBall
     uniqueID: 1325935533
