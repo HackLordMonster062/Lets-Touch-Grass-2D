@@ -32,7 +32,7 @@ public class Bug : Obstacle {
     }
 
     void Update() {
-        if (!_isAlive) return;
+        if (!_isAlive || GameManager.instance.State != GameState.Playing) return;
 
         Vector3 dir = Grass.instance.transform.position - _position;
 

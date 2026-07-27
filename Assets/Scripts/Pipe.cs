@@ -23,6 +23,8 @@ public class Pipe : Obstacle {
 	}
 
 	private void Update() {
+		if (GameManager.instance.State != GameState.Playing) return;
+
 		if (_isBroken && _breakingTime + dryingDelay <= Time.time) {
             Grass.instance.Damage(dryingDamage * Time.deltaTime);
         }

@@ -19,6 +19,8 @@ public class Grass : Singleton<Grass> {
     [field: SerializeField] public float Health { get; private set; }
 
     public event Action<int> OnGrowthStageChanged;
+    public event Action OnTouched;
+    public event Action OnDied;
 
     protected override void Awake() {
         base.Awake();
@@ -57,21 +59,23 @@ public class Grass : Singleton<Grass> {
         _renderer.sprite = growthStages[Mathf.Clamp((int)Growth, 0, growthStages.Length - 1)];
     }
 
-    void Die() {
-
-    }
-
     void FullyGrown() {
         _isFullyGrown = true;
     }
 
-    public void Damage(float damage) {
+	private void OnMouseDown() {
+		if (_isFullyGrown) {
+            OnTouched?.Invoke();
+        }
+	}
+
+	public void Damage(float damage) {
         _wasDamaged = true;
 
         Health -= damage;
 
         if (Health <= 0) {
-            Die();
+            OnDied?.Invoke();
         }
     }
 }

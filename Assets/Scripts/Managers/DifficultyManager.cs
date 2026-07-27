@@ -27,6 +27,8 @@ public class DifficultyManager : Singleton<DifficultyManager> {
 	}
 
 	void Update() {
+        if (GameManager.instance.State != GameState.Playing) return;
+
         foreach (var (obstacle, time) in _timers.ToArray()) {
             if (Time.time >= time) {
                 obstacle.obstacle.Enter();

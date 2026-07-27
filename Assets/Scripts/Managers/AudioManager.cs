@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static Unity.VisualScripting.Member;
 
 public class AudioManager : Singleton<AudioManager> {
 	[SerializeField] AudioSource musicSource;
-	[SerializeField] AudioSource sfxSource;
 	[SerializeField] AudioMixer mixer;
 	[SerializeField] List<AudioClip> soundEffects; 
 
-	Dictionary<string, AudioClip> _sfxDict;
-	Dictionary<string, AudioSource> _persistentSfxSources;
+	Dictionary<string, AudioSource> _sfxDict;
 
 	public bool IsOn { get; private set; }
 
@@ -29,11 +28,11 @@ public class AudioManager : Singleton<AudioManager> {
 		if (state != GameState.Playing) return;
 
 		InitializeSFXDictionary();
-		_persistentSfxSources = new();
 
 		if (PlayerPrefs.GetInt("SoundOn") == 0) {
 			musicSource.mute = true;
-			sfxSource.mute = true;
+
+
 		}
 
 		SetVolumeMusic(PlayerPrefs.GetFloat("MusicVolume"));
@@ -43,46 +42,49 @@ public class AudioManager : Singleton<AudioManager> {
 	}
 
 	private void InitializeSFXDictionary() {
-		_sfxDict = new Dictionary<string, AudioClip>();
+		_sfxDict = new Dictionary<string, AudioSource>();
 		foreach (var clip in soundEffects) {
-			_sfxDict[clip.name] = clip;
+			AudioSource source = new GameObject().AddComponent<AudioSource>();
+			source.transform.parent = transform;
+
+			source.loop = false;
+			source.outputAudioMixerGroup = _masterGroup;
+			source.clip = clip;
+			source.playOnAwake = false;
+
+			_sfxDict[clip.name] = source;
 		}
 	}
 
 	public void PlaySound(string clipName) {
-		if (_sfxDict.TryGetValue(clipName, out AudioClip clip)) {
-			sfxSource.PlayOneShot(clip);
+		if (_sfxDict.TryGetValue(clipName, out AudioSource clip)) {
+			clip.loop = false;
+			clip.Play();
 		} else {
 			print($"Sound {clipName} not found");
 		}
 	}
 
 	public void PlaySoundPersistent(string clipName) {
-		if (!_persistentSfxSources.TryGetValue(clipName, out AudioSource source)) {
-			if (_sfxDict.TryGetValue(clipName, out AudioClip clip)) {
-				source = new GameObject().AddComponent<AudioSource>();
-				source.transform.parent = transform;
-
-				source.loop = true;
-				source.outputAudioMixerGroup = _masterGroup;
-				source.clip = clip;
-			} else {
-				print($"Sound {clipName} not found");
-
-				return;
-			}
-
-			_persistentSfxSources[clipName] = source;
+		if (_sfxDict.TryGetValue(clipName, out AudioSource source)) {
+			source.loop = true;
+			source.Play();
+		} else {
+			print($"Sound {clipName} not found");
 		}
-
-		source.Play();
 	}
 
 	public void StopSound(string clipName) {
-		if (_persistentSfxSources.ContainsKey(clipName))
-			_persistentSfxSources[clipName].Stop();
+		if (_sfxDict.TryGetValue(clipName, out AudioSource source))
+			source.Stop();
 		else
 			print($"Sound {clipName} not found");
+	}
+
+	public void TogglePause(bool pause) {
+		foreach (var (_, source) in _sfxDict) {
+			AudioListener.pause = pause;
+		}
 	}
 
 	public void ToggleMusic(bool play = true) {
@@ -90,15 +92,15 @@ public class AudioManager : Singleton<AudioManager> {
 	}
 
 	public void ToggleSound(bool on = true) {
-		sfxSource.mute = !on;
-
-		foreach (var (_, source) in _persistentSfxSources) {
+		foreach (var (_, source) in _sfxDict) {
 			source.mute = !on;
 		}
 	}
 
 	public void SetVolumeSFX(float sfxVolume) {
-		sfxSource.volume = sfxVolume;
+		foreach (var (_, source) in _sfxDict) {
+			source.volume = sfxVolume;
+		}
 	}
 
 	public void SetVolumeMusic(float musicVolume) {

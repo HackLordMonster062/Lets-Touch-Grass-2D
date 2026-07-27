@@ -46,7 +46,9 @@ public class Phone : Obstacle {
         AudioManager.instance.FadeOut(growthDuration * 3 / 4);
 
         while (progress < 1) {
-            transform.localScale = Vector3.Lerp(_startScale, maxScale, progress);
+			if (GameManager.instance.State != GameState.Playing) continue;
+
+			transform.localScale = Vector3.Lerp(_startScale, maxScale, progress);
             transform.position = Vector3.Lerp(_startPos, maxPos, progress);
             fadeOut.color = Color.Lerp(new Color(0, 0, 0, 0), new Color(0, 0, 0, maxOpacity), progress);
 
@@ -66,6 +68,8 @@ public class Phone : Obstacle {
         Color startColor = fadeOut.color;
 
 		while (progress < 1) {
+			if (GameManager.instance.State != GameState.Playing) continue;
+
 			transform.localScale = Vector3.Lerp(startScale, _startScale, progress);
 			transform.position = Vector3.Lerp(startPos, _startPos, progress);
 			fadeOut.color = Color.Lerp(startColor, new Color(0, 0, 0, 0), progress);

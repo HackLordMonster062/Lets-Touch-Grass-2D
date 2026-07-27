@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
@@ -26,6 +27,9 @@ public class GameManager : Singleton<GameManager> {
 		PlayerPrefs.SetFloat("SFXVolume", 1);
 		PlayerPrefs.SetInt("SoundOn", 1);
 
+		Grass.instance.OnTouched += Win;
+		Grass.instance.OnDied += Lose;
+
 		ChangeState(GameState.Playing);
     }
 
@@ -40,17 +44,23 @@ public class GameManager : Singleton<GameManager> {
     }
 
 	public void TogglePause(bool pause) {
-		if (!pause) {
+		if (!pause && State == GameState.Paused) {
 			ChangeState(GameState.Playing);
-		} else {
+		} else if (pause && State == GameState.Playing) {
 			ChangeState(GameState.Paused);
 		}
-
-		UIManager.instance.TogglePause(pause);
 	}
 
 	public void TogglePause() {
 		TogglePause(GameState.Paused != State);
+	}
+
+	public void Win() {
+		ChangeState(GameState.Won);
+	}
+
+	public void Lose() {
+		ChangeState(GameState.Lost);
 	}
 
 	public void ChangeState(GameState newState) {
@@ -61,11 +71,19 @@ public class GameManager : Singleton<GameManager> {
 			case GameState.Initiating:
 				break;
 			case GameState.Paused:
+				AudioManager.instance.TogglePause(true); 
 				Time.timeScale = 0;
+				UIManager.instance.TogglePause(true);
 
 				break;
 			case GameState.Playing:
 				Time.timeScale = 1;
+				UIManager.instance.TogglePause(false);
+				AudioManager.instance.TogglePause(false);
+
+				break;
+			case GameState.Lost:
+				Time.timeScale = 0;
 
 				break;
 		}
@@ -76,10 +94,16 @@ public class GameManager : Singleton<GameManager> {
 	public void OnCancel(InputValue value) {
 		TogglePause();
 	}
+
+	public void Retry() {
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 }
 
 public enum GameState {
 	Initiating,
 	Paused,
-	Playing
+	Playing,
+	Won,
+	Lost
 }

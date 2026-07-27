@@ -16,7 +16,9 @@ public class Window : Obstacle {
     }
 
     void Update() {
-        Collider2D collider = Physics2D.OverlapPoint(transform.position);
+		if (GameManager.instance.State != GameState.Playing) return;
+
+		Collider2D collider = Physics2D.OverlapPoint(transform.position);
 
         Blanket blanket = collider?.GetComponentInParent<Blanket>();
 
