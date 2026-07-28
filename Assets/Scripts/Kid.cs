@@ -56,7 +56,7 @@ public class Kid : Obstacle {
         _anim.SetTrigger("Enter");
 
 		if (isIntroduced) {
-			// highlight ball
+			ball.Highlight();
 		}
     }
 

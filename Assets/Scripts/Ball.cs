@@ -5,19 +5,22 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
     [SerializeField] Transform target;
     [SerializeField] float arcHeight;
-    [SerializeField] float shootingSpeed;
     [SerializeField] float shootingTorque;
     [SerializeField] float damage;
 
     Rigidbody2D _rb;
+	SpriteRenderer _renderer;
+
+	bool _isHighlighted;
 
     void Awake() {
         _rb = GetComponent<Rigidbody2D>();
+		_renderer = GetComponent<SpriteRenderer>();
     }
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject == Grass.instance.gameObject) {
-			Grass.instance.Damage(50);
+			Grass.instance.Damage(damage);
 
 			Shoot(target.position);
 		}
@@ -25,6 +28,20 @@ public class Ball : MonoBehaviour {
 
 	private void OnMouseDown() {
 		Shoot(target.position);
+
+		StopHighlight();
+	}
+
+	public void Highlight() {
+		_isHighlighted = true;
+		PulsingManager.instance.StartPulse(_renderer);
+	}
+
+	public void StopHighlight() {
+		if (!_isHighlighted) return;
+
+		PulsingManager.instance.StopPulse(_renderer);
+		_isHighlighted = false;
 	}
 
 	public void Shoot(Vector3 target) {

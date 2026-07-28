@@ -26,6 +26,8 @@ public class Blanket : MonoBehaviour, IPickup {
 	}
 
 	public void StopHighlight() {
+		if (!_isHighlighted) return;
+
 		PulsingManager.instance.StopPulse(restRenderer);
 		_isHighlighted = false;
 	}
