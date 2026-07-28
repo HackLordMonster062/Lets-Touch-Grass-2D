@@ -71,7 +71,7 @@ public class Bug : Obstacle {
         return new Vector3(vec.x * Mathf.Cos(angle) - vec.y * Mathf.Sin(angle), vec.x * Mathf.Sin(angle) + vec.y * Mathf.Cos(angle), 0);
     }
 
-    public override void Enter() {
+    public override void Enter(bool isIntroduced) {
         _isAlive = true;
 
 		_offset = new Vector3(rotationRadius, 0, 0);
@@ -83,6 +83,10 @@ public class Bug : Obstacle {
 		gameObject.SetActive(true);
 
         AudioManager.instance.PlaySoundPersistent("Buzz");
+
+        if (isIntroduced) {
+            // highlight swatter
+        }
 	}
 
 	public override void Exit() {

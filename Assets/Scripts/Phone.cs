@@ -38,10 +38,14 @@ public class Phone : Obstacle {
 		StartCoroutine(LerpToStart());
 	}
 
-	public override void Enter() {
+	public override void Enter(bool isIntroduced) {
         graphics.sprite = onSprite;
 
         StartCoroutine(LerpToScale());
+
+        if (isIntroduced) {
+            // highlight button
+        }
     }
 
     public override void Exit() {

@@ -49,11 +49,15 @@ public class Kid : Obstacle {
         }
 	}
 
-    public override void Enter() {
+    public override void Enter(bool isIntroduced) {
         gameObject.SetActive(true);
         ball.gameObject.SetActive(true);
 
         _anim.SetTrigger("Enter");
+
+		if (isIntroduced) {
+			// highlight ball
+		}
     }
 
     public void Ready() {

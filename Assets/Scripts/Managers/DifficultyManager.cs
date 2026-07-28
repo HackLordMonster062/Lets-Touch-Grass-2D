@@ -35,7 +35,7 @@ public class DifficultyManager : MonoBehaviour {
 
         foreach (var (obstacle, time) in _timers.ToArray()) {
             if (Time.time >= time) {
-                obstacle.obstacle.Enter();
+                obstacle.obstacle.Enter(difficulties[Difficulty].GetByID(obstacle.id).isIntroduced);
 				_timers.Remove(obstacle);
 			}
         }

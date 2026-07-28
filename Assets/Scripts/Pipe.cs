@@ -45,7 +45,7 @@ public class Pipe : Obstacle {
         }
 	}
 
-    public override void Enter() {
+    public override void Enter(bool isIntroduced) {
         StopAllCoroutines();
 		StartCoroutine(StartDripping(holePoint.position));
 		_renderer.sprite = rippedSprite;
@@ -53,6 +53,10 @@ public class Pipe : Obstacle {
 
         _breakingTime = Time.time;
         _isBroken = true;
+
+        if (isIntroduced) {
+            // Highlight tape
+        }
 	}
 
     public override void Exit() {

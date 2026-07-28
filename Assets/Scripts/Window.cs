@@ -40,10 +40,14 @@ public class Window : Obstacle {
         }
     }
 
-    public override void Enter() {
+    public override void Enter(bool isIntroduced) {
 		sunAnimator.SetTrigger("Rise");
 
         AudioManager.instance.PlaySound("Hum");
+
+		if (isIntroduced) {
+			blanket.Highlight();
+		}
 	}
 
     public override void Exit() {
@@ -58,5 +62,6 @@ public class Window : Obstacle {
 
     public void SunHidden() {
         IsSunVisible = false;
-    }
+		blanket.StopHighlight();
+	}
 }

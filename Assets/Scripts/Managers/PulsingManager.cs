@@ -7,25 +7,32 @@ public class PulsingManager : Singleton<PulsingManager> {
 	[SerializeField] float minIntensity;
 	[SerializeField] float maxIntensity;
 
-	Dictionary<SpriteRenderer, IEnumerator> pulses;
+	Dictionary<SpriteRenderer, (Color, IEnumerator)> pulses;
 
-    public void StartPulse(SpriteRenderer renderer) {
-		if (pulses.ContainsKey(renderer)) StopCoroutine(pulses[renderer]);
+	protected override void Awake() {
+		base.Awake();
 
-		pulses[renderer] = Pulse(renderer);
+		pulses = new();
+	}
 
-		StartCoroutine(pulses[renderer]);
+	public void StartPulse(SpriteRenderer renderer) {
+		if (pulses.ContainsKey(renderer)) StopCoroutine(pulses[renderer].Item2);
+
+		Color originalColor = renderer.material.color;
+		pulses[renderer] = (originalColor, Pulse(renderer, originalColor));
+
+		StartCoroutine(pulses[renderer].Item2);
 	}
 
 	public void StopPulse(SpriteRenderer renderer) {
-		StopCoroutine(pulses[renderer]);
+		renderer.material.color = pulses[renderer].Item1;
+
+		StopCoroutine(pulses[renderer].Item2);
 		pulses.Remove(renderer);
 	}
 
-	IEnumerator Pulse(SpriteRenderer renderer) {
+	IEnumerator Pulse(SpriteRenderer renderer, Color originalColor) {
 		float t = 0;
-
-		Color originalColor = renderer.color;
 
 		while (true) {
 			if (GameManager.instance.State != GameState.Playing) {
@@ -35,7 +42,9 @@ public class PulsingManager : Singleton<PulsingManager> {
 
 			t = (Mathf.Sin(Time.time * pulsingSpeed) + 1) / 2;
 
-			renderer.color = originalColor * Mathf.Lerp(minIntensity, maxIntensity, t);
+			renderer.material.color = originalColor * Mathf.Lerp(minIntensity, maxIntensity, t);
+
+			yield return null;
 		}
 	}
 }

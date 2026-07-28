@@ -3,17 +3,15 @@ using UnityEngine;
 public class Blanket : MonoBehaviour, IPickup {
 	[SerializeField] GameObject releasedSprite;
 	[SerializeField] GameObject pickedSprite;
+	[SerializeField] SpriteRenderer restRenderer;
 
 	Vector3 _startPosition;
 
 	bool _isPickedUp;
 	bool _isHighlighted;
 
-	SpriteRenderer _renderer;
-
 	private void Awake() {
 		_startPosition = transform.position;
-		_renderer = GetComponent<SpriteRenderer>();
 	}
 
 	private void Update() {
@@ -24,11 +22,16 @@ public class Blanket : MonoBehaviour, IPickup {
 
 	public void Highlight() {
 		_isHighlighted = true;
-		PulsingManager.instance.StartPulse(_renderer);
+		PulsingManager.instance.StartPulse(restRenderer);
+	}
+
+	public void StopHighlight() {
+		PulsingManager.instance.StopPulse(restRenderer);
+		_isHighlighted = false;
 	}
 
 	public bool Pickup() {
-		if (_isHighlighted) PulsingManager.instance.StopPulse(_renderer);
+		if (_isHighlighted) StopHighlight();
 
 		releasedSprite.SetActive(false);
 		pickedSprite.SetActive(true);
