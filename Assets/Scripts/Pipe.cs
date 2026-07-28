@@ -20,6 +20,21 @@ public class Pipe : Obstacle {
 	private void Awake() {
         _renderer = GetComponent<SpriteRenderer>();
         _renderer.sprite = fixedSprite;
+
+		GameManager.OnAfterStateChange += Initiate;
+	}
+
+	private void OnDestroy() {
+		GameManager.OnAfterStateChange -= Initiate;
+	}
+
+	void Initiate(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		StopAllCoroutines();
+		StartCoroutine(StartDripping(drippingPoint.position));
+		_renderer.sprite = fixedSprite;
+		_isBroken = false;
 	}
 
 	private void Update() {
@@ -28,10 +43,6 @@ public class Pipe : Obstacle {
 		if (_isBroken && _breakingTime + dryingDelay <= Time.time) {
             Grass.instance.Damage(dryingDamage * Time.deltaTime);
         }
-	}
-
-	void Start() {
-        StartCoroutine(StartDripping(drippingPoint.position));
 	}
 
     public override void Enter() {

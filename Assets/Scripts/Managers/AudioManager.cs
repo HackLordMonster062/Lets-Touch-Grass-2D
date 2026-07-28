@@ -16,6 +16,7 @@ public class AudioManager : Singleton<AudioManager> {
 
 	protected override void Awake() {
 		base.Awake();
+		if (instance != this) return;
 
 		AudioMixerGroup[] groups = mixer.FindMatchingGroups("Master");
 		_masterGroup = groups[0];
@@ -24,14 +25,12 @@ public class AudioManager : Singleton<AudioManager> {
 	}
 
 	private void Initiate(GameState state) {
-		if (state != GameState.Playing) return;
+		if (state != GameState.Initiating) return;
 
 		InitializeSFXDictionary();
 
 		if (PlayerPrefs.GetInt("SoundOn") == 0) {
 			musicSource.mute = true;
-
-
 		}
 
 		SetVolumeMusic(PlayerPrefs.GetFloat("MusicVolume"));
@@ -81,8 +80,10 @@ public class AudioManager : Singleton<AudioManager> {
 	}
 
 	public void TogglePause(bool pause) {
+		AudioListener.pause = pause;
 		foreach (var (_, source) in _sfxDict) {
-			AudioListener.pause = pause;
+			if (pause) source.Pause();
+			else source.UnPause();
 		}
 	}
 
@@ -124,6 +125,11 @@ public class AudioManager : Singleton<AudioManager> {
 		float t = 0f;
 
 		while (t < duration) {
+			if (GameManager.instance.State != GameState.Playing) {
+				yield return null;
+				continue;
+			}
+
 			t += Time.deltaTime;
 
 			float db = Mathf.Lerp(startDb, targetDb, t / duration);

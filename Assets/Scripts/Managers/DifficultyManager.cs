@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class DifficultyManager : Singleton<DifficultyManager> {
+public class DifficultyManager : MonoBehaviour {
     [SerializeField] DifficultyData[] difficulties;
     [SerializeField] ObstacleData[] obstacles;
 
@@ -12,18 +12,22 @@ public class DifficultyManager : Singleton<DifficultyManager> {
 
     Dictionary<ObstacleData, float> _timers;
 
-    protected override void Awake() {
-        base.Awake();
+    void Awake() {
+        GameManager.OnBeforeStateChange += Initiate;
 
-        _timers = new();
-
-        foreach (ObstacleData obstacle in obstacles) {
-            obstacle.obstacle.OnExit += () => ResetTimer(obstacle);
-        }
-    }
+		foreach (ObstacleData obstacle in obstacles) {
+			obstacle.obstacle.OnExit += () => ResetTimer(obstacle);
+		}
+	}
 
 	private void Start() {
-        Grass.instance.OnGrowthStageChanged += UpdateDifficulty;
+		Grass.instance.OnGrowthStageChanged += UpdateDifficulty;
+	}
+
+	private void Initiate(GameState state) {
+        if (state != GameState.Initiating) return;
+
+		_timers = new();
 	}
 
 	void Update() {

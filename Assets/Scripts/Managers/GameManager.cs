@@ -18,10 +18,14 @@ public class GameManager : Singleton<GameManager> {
 
 		_input = new();
 		_input.UI.Enable();
+
+		SceneManager.sceneLoaded += (scene, loadMode) => { if (scene.name == "MainView") StartGame(); };
 	}
 
-	void Start() {
+	public void StartGame() {
 		ChangeState(GameState.Initiating);
+
+		Timer = 0;
 
 		PlayerPrefs.SetFloat("MusicVolume", 1);
 		PlayerPrefs.SetFloat("SFXVolume", 1);
@@ -83,11 +87,13 @@ public class GameManager : Singleton<GameManager> {
 
 				break;
 			case GameState.Lost:
+				AudioManager.instance.TogglePause(true);
 				Time.timeScale = 0;
 				UIManager.instance.Lose(Timer);
 
 				break;
 			case GameState.Won:
+				AudioManager.instance.TogglePause(true);
 				Time.timeScale = 0;
 				UIManager.instance.Win(Timer);
 
@@ -102,7 +108,9 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	public void Retry() {
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		TogglePause(false);
+
+		StartGame();
 	}
 }
 

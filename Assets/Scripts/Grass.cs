@@ -25,11 +25,19 @@ public class Grass : Singleton<Grass> {
     protected override void Awake() {
         base.Awake();
 
-        Health = startingHealth;
-        Growth = 0;
-
         _renderer = GetComponent<SpriteRenderer>();
+
+        GameManager.OnAfterStateChange += Initiate;
     }
+
+    void Initiate(GameState state) {
+        if (state != GameState.Initiating) return;
+
+		Health = startingHealth;
+		Growth = 0;
+        _nextGrowth = 0;
+        _isFullyGrown = false;
+	}
 
     void Update() {
         if (!_wasDamaged && Health < startingHealth) {

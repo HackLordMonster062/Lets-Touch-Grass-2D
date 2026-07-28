@@ -22,6 +22,20 @@ public class Phone : Obstacle {
         _startScale = transform.localScale;
 
         GetComponentInChildren<PhonePowerButton>().OnPressed += Exit;
+
+        GameManager.OnAfterStateChange += Initiate;
+	}
+
+	private void OnDestroy() {
+		GameManager.OnAfterStateChange -= Initiate;
+	}
+
+	void Initiate(GameState state) {
+        if (state != GameState.Initiating) return;
+
+		StopAllCoroutines();
+
+		StartCoroutine(LerpToStart());
 	}
 
 	public override void Enter() {
@@ -46,7 +60,10 @@ public class Phone : Obstacle {
         AudioManager.instance.FadeOut(growthDuration * 3 / 4);
 
         while (progress < 1) {
-			if (GameManager.instance.State != GameState.Playing) continue;
+			if (GameManager.instance.State != GameState.Playing) {
+				yield return null;
+				continue;
+			}
 
 			transform.localScale = Vector3.Lerp(_startScale, maxScale, progress);
             transform.position = Vector3.Lerp(_startPos, maxPos, progress);
@@ -68,7 +85,10 @@ public class Phone : Obstacle {
         Color startColor = fadeOut.color;
 
 		while (progress < 1) {
-			if (GameManager.instance.State != GameState.Playing) continue;
+			if (GameManager.instance.State != GameState.Playing) {
+				yield return null;
+				continue;
+			}
 
 			transform.localScale = Vector3.Lerp(startScale, _startScale, progress);
 			transform.position = Vector3.Lerp(startPos, _startPos, progress);

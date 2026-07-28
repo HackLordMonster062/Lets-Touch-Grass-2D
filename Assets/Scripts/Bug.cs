@@ -29,9 +29,23 @@ public class Bug : Obstacle {
 
         _renderer = GetComponent<SpriteRenderer>();
         _renderer.sprite = defaultSprite;
-    }
 
-    void Update() {
+		GameManager.OnAfterStateChange += Initiate;
+	}
+
+	private void OnDestroy() {
+		GameManager.OnAfterStateChange -= Initiate;
+	}
+
+	void Initiate(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		gameObject.SetActive(false);
+        transform.position = _startPosition;
+		_isAlive = false;
+	}
+
+	void Update() {
         if (!_isAlive || GameManager.instance.State != GameState.Playing) return;
 
         Vector3 dir = Grass.instance.transform.position - _position;

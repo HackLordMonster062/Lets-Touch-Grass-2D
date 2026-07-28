@@ -16,15 +16,22 @@ public class Kid : Obstacle {
 
 		gameObject.SetActive(false);
 		ball.gameObject.SetActive(false);
+
+		GameManager.OnAfterStateChange += Initiate;
 	}
 
-	void Start() {
-        
-    }
+	private void OnDestroy() {
+		GameManager.OnAfterStateChange -= Initiate;
+	}
 
-    void Update() {
-        
-    }
+	void Initiate(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		_currHits = 0;
+		_isActive = false;
+		_anim.enabled = true;
+		_anim.SetTrigger("Exit");
+	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
         if (_isActive && other.gameObject == ball.gameObject) {

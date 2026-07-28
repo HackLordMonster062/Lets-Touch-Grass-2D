@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoseMenu : MonoBehaviour {
 	[SerializeField] TMP_Text timeText;
@@ -15,6 +16,6 @@ public class LoseMenu : MonoBehaviour {
 	}
 
 	public void Menu() {
-
+		SceneManager.LoadScene("MainMenu");
 	}
 }

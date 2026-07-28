@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinMenu : MonoBehaviour {
     [SerializeField] TMP_Text timeText;
@@ -17,7 +18,7 @@ public class WinMenu : MonoBehaviour {
     }
 
     public void Menu() {
-
+        SceneManager.LoadScene("MainMenu");
     }
 
     static string CalculateGrade(float time) {
