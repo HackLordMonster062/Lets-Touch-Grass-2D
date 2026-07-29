@@ -122,7 +122,7 @@ Packages/packages-lock.json linguist-generated
 # Images
 *.bmp                   lfs
 *.exr                   lfs
-*.gif                   lfs
+#*.gif                   lfs
 *.hdr                   lfs
 *.iff                   lfs
 *.jpeg                  lfs
