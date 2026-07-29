@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Tape : MonoBehaviour, IPickup {
 	[SerializeField] float fixingRadius;
@@ -8,9 +9,21 @@ public class Tape : MonoBehaviour, IPickup {
 	Vector3 _startPosition;
 
 	bool _isPickedUp;
+	bool _isHighlighted;
+
+	SpriteRenderer _renderer;
 
 	private void Awake() {
 		_startPosition = transform.position;
+
+		_renderer = GetComponent<SpriteRenderer>();
+		GameManager.OnAfterStateChange += Cleanup;
+	}
+
+	void Cleanup(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		StopHighlight();
 	}
 
 	private void Update() {
@@ -24,11 +37,25 @@ public class Tape : MonoBehaviour, IPickup {
 
 		_isPickedUp = true;
 
+		StopHighlight();
+
 		return true;
 	}
 
 	public void Release() {
 		StartCoroutine(Fix());
+	}
+
+	public void Highlight() {
+		_isHighlighted = true;
+		PulsingManager.instance.StartPulse(_renderer);
+	}
+
+	public void StopHighlight() {
+		if (!_isHighlighted) return;
+
+		PulsingManager.instance.StopPulse(_renderer);
+		_isHighlighted = false;
 	}
 
 	IEnumerator Fix() {

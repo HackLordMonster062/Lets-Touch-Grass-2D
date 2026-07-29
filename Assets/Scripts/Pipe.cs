@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pipe : Obstacle {
     [SerializeField] Sprite fixedSprite;
     [SerializeField] Sprite rippedSprite;
+    [SerializeField] Tape tape;
     [SerializeField] GameObject droplet;
     [SerializeField] Transform drippingPoint;
     [SerializeField] Transform holePoint;
@@ -55,7 +56,7 @@ public class Pipe : Obstacle {
         _isBroken = true;
 
         if (isIntroduced) {
-            // Highlight tape
+            tape.Highlight();
         }
 	}
 

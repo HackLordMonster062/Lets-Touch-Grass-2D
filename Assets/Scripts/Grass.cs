@@ -56,7 +56,7 @@ public class Grass : Singleton<Grass> {
 
         ShowGrowth();
 
-        if (Growth >= growthStages.Length - 1) {
+        if (Growth >= growthStages.Length - 1 && !_isFullyGrown) {
             FullyGrown();
         }
 
@@ -69,6 +69,7 @@ public class Grass : Singleton<Grass> {
 
     void FullyGrown() {
         _isFullyGrown = true;
+        PulsingManager.instance.StartPulse(_renderer);
     }
 
 	private void OnMouseDown() {

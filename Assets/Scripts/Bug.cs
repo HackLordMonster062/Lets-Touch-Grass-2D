@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bug : Obstacle {
     [SerializeField] Sprite defaultSprite;
     [SerializeField] Sprite splatSprite;
+    [SerializeField] Swatter swatter;
     [SerializeField] float flightSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float randomRotationAmount;
@@ -85,7 +86,7 @@ public class Bug : Obstacle {
         AudioManager.instance.PlaySoundPersistent("Buzz");
 
         if (isIntroduced) {
-            // highlight swatter
+            swatter.Highlight();
         }
 	}
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : Singleton<AudioManager> {
+public class AudioManager : PersistentSingleton<AudioManager> {
 	[SerializeField] AudioSource musicSource;
 	[SerializeField] AudioMixer mixer;
 	[SerializeField] List<AudioClip> soundEffects; 

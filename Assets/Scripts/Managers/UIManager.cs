@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class UIManager : Singleton<UIManager> {
+public class UIManager : PersistentSingleton<UIManager> {
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] WinMenu winMenu;
     [SerializeField] LoseMenu loseMenu;
@@ -17,6 +17,7 @@ public class UIManager : Singleton<UIManager> {
 
 	protected override void Awake() {
 		base.Awake();
+		if (instance != this) return;
 
 		GameManager.OnBeforeStateChange += Initiate;
 	}

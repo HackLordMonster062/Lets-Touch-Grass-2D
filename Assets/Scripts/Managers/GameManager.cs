@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager> {
+public class GameManager : PersistentSingleton<GameManager> {
 
 	public GameState State { get; private set; }
 	public float Timer { get; private set; }
@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager> {
 
 	protected override void Awake() {
 		base.Awake();
+		if (instance != this) return;
 
 		_input = new();
 		_input.UI.Enable();
@@ -61,10 +62,12 @@ public class GameManager : Singleton<GameManager> {
 
 	public void Win() {
 		ChangeState(GameState.Won);
+		ChangeState(GameState.Cleanup);
 	}
 
 	public void Lose() {
 		ChangeState(GameState.Lost);
+		ChangeState(GameState.Cleanup);
 	}
 
 	public void ChangeState(GameState newState) {
@@ -98,6 +101,11 @@ public class GameManager : Singleton<GameManager> {
 				UIManager.instance.Win(Timer);
 
 				break;
+			case GameState.Cleanup:
+				Grass.instance.OnTouched -= Win;
+				Grass.instance.OnDied -= Lose;
+
+				break;
 		}
 
 		OnAfterStateChange?.Invoke(newState);
@@ -119,5 +127,6 @@ public enum GameState {
 	Paused,
 	Playing,
 	Won,
-	Lost
+	Lost,
+	Cleanup
 }

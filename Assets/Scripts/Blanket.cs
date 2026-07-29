@@ -12,6 +12,13 @@ public class Blanket : MonoBehaviour, IPickup {
 
 	private void Awake() {
 		_startPosition = transform.position;
+		GameManager.OnAfterStateChange += Cleanup;
+	}
+
+	void Cleanup(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		StopHighlight();
 	}
 
 	private void Update() {

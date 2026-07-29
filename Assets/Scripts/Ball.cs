@@ -16,7 +16,15 @@ public class Ball : MonoBehaviour {
     void Awake() {
         _rb = GetComponent<Rigidbody2D>();
 		_renderer = GetComponent<SpriteRenderer>();
+
+		GameManager.OnAfterStateChange += Cleanup;
     }
+
+	void Cleanup(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		StopHighlight();
+	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject == Grass.instance.gameObject) {

@@ -372,8 +372,8 @@ MonoBehaviour:
   obstacles:
   - id: Sun
     obstacle: {fileID: 805231498}
-    entranceDelayMin: 2
-    entranceDelayMax: 2
+    entranceDelayMin: 15
+    entranceDelayMax: 15
   - id: Ball
     obstacle: {fileID: 1598404482}
     entranceDelayMin: 2
@@ -1548,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0241437f3051341adb0c7a85dfb913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Swatter
+  restRenderer: {fileID: 2115291613}
   defaultSprite: {fileID: 2115291611}
   swattingSprite: {fileID: 1640808797}
   swattingRadius: 1
@@ -3199,6 +3200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bug
   defaultSprite: {fileID: 5352286359449648278, guid: 222dc33c8d0b75d468ac57d3623ea498, type: 3}
   splatSprite: {fileID: 3977125322953067361, guid: 2edd6a85497a21d458b5bb2a2a9cec5e, type: 3}
+  swatter: {fileID: 1113614609}
   flightSpeed: 1.5
   rotationSpeed: 6
   randomRotationAmount: 10
@@ -3547,6 +3549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pipe
   fixedSprite: {fileID: 21300000, guid: 87f7646610f21af4b81af90707a48364, type: 3}
   rippedSprite: {fileID: 21300000, guid: c4d827c7a7b63004ea7e77960971d83c, type: 3}
+  tape: {fileID: 797891566}
   droplet: {fileID: 8126580259518889760, guid: 35cac66818e473a44a17c87be2212cda, type: 3}
   drippingPoint: {fileID: 1363159730}
   holePoint: {fileID: 197227788}

@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Swatter : MonoBehaviour, IPickup {
+	[SerializeField] SpriteRenderer restRenderer;
 	[SerializeField] GameObject defaultSprite;
 	[SerializeField] GameObject swattingSprite;
 	[SerializeField] float swattingRadius;
@@ -10,9 +12,17 @@ public class Swatter : MonoBehaviour, IPickup {
 	Vector3 _startPosition;
 
 	bool _isPickedUp;
+	bool _isHighlighted;
 
 	private void Awake() {
 		_startPosition = transform.position;
+		GameManager.OnAfterStateChange += Cleanup;
+	}
+
+	void Cleanup(GameState state) {
+		if (state != GameState.Initiating) return;
+
+		StopHighlight();
 	}
 
 	private void Update() {
@@ -26,6 +36,8 @@ public class Swatter : MonoBehaviour, IPickup {
 
 		_isPickedUp = true;
 
+		StopHighlight();
+
 		return true;
 	}
 
@@ -34,6 +46,18 @@ public class Swatter : MonoBehaviour, IPickup {
 		swattingSprite.SetActive(true);
 
 		StartCoroutine(Swat());
+	}
+
+	public void Highlight() {
+		_isHighlighted = true;
+		PulsingManager.instance.StartPulse(restRenderer);
+	}
+
+	public void StopHighlight() {
+		if (!_isHighlighted) return;
+
+		PulsingManager.instance.StopPulse(restRenderer);
+		_isHighlighted = false;
 	}
 
 	IEnumerator Swat() {
