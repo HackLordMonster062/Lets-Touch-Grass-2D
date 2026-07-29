@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,11 +6,24 @@ public class PauseMenu : MonoBehaviour {
 	[SerializeField] Sprite soundOn;
 	[SerializeField] Sprite soundOff;
 	[SerializeField] Image muteButton;
+	[SerializeField] Slider sfxSlider;
+	[SerializeField] Slider musicSlider;
 
 	bool _isMuted;
 
-	private void Start() {
+	private void Awake() {
+		GameManager.OnBeforeStateChange += UpdateValues;
+
+		sfxSlider.onValueChanged.AddListener(ChangeSfxVolume);
+		musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
+	}
+
+	private void UpdateValues(GameState state) {
+		if (state != GameState.Paused) return;
+
 		SetMute(PlayerPrefs.GetInt("SoundOn") == 0);
+		sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+		musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
 	}
 
 	public void ChangeSfxVolume(float newValue) {
@@ -20,7 +34,14 @@ public class PauseMenu : MonoBehaviour {
 		AudioManager.instance.SetVolumeMusic(newValue);
 	}
 
+	public void Continue() {
+		GameManager.instance.TogglePause();
+	}
+
 	public void ToggleMute() {
+		AudioManager.instance.ToggleSound(!_isMuted);
+		AudioManager.instance.ToggleMusic(!_isMuted);
+
 		SetMute(!_isMuted);
 	}
 
@@ -28,7 +49,5 @@ public class PauseMenu : MonoBehaviour {
 		_isMuted = mute;
 
 		muteButton.sprite = mute ? soundOff : soundOn;
-
-		AudioManager.instance.ToggleMusic(_isMuted);
 	}
 }
