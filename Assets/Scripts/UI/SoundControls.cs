@@ -16,6 +16,10 @@ public class SoundControls : MonoBehaviour {
 		AudioManager.OnVolumeChanged += UpdateValues;
 	}
 
+	private void OnDestroy() {
+		AudioManager.OnVolumeChanged -= UpdateValues;
+	}
+
 	public void UpdateValues() {
 		SetMute(!AudioManager.instance.IsSoundOn);
 		sfxSlider.value = AudioManager.instance.SFXVolume;
@@ -31,10 +35,7 @@ public class SoundControls : MonoBehaviour {
 	}
 
 	public void ToggleMute() {
-		AudioManager.instance.ToggleSound(!_isMuted);
-		AudioManager.instance.ToggleMusic(!_isMuted);
-
-		SetMute(!_isMuted);
+		AudioManager.instance.ToggleAllSound(!_isMuted);
 	}
 
 	public void SetMute(bool mute) {

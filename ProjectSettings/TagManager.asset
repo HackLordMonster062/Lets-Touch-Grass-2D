@@ -67,6 +67,9 @@ TagManager:
   - name: Phone
     uniqueID: 973004917
     locked: 0
+  - name: Indicators
+    uniqueID: 2140193479
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []

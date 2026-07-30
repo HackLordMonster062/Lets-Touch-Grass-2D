@@ -29,13 +29,13 @@ public class Blanket : MonoBehaviour, IPickup {
 
 	public void Highlight() {
 		_isHighlighted = true;
-		PulsingManager.instance.StartPulse(restRenderer);
+		HighlightManager.instance.StartPulse(restRenderer);
 	}
 
 	public void StopHighlight() {
 		if (!_isHighlighted) return;
 
-		PulsingManager.instance.StopPulse(restRenderer);
+		HighlightManager.instance.StopPulse(restRenderer);
 		_isHighlighted = false;
 	}
 

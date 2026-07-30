@@ -57,7 +57,10 @@ public class Pipe : Obstacle {
 
         if (isIntroduced) {
             tape.Highlight();
-        }
+
+			HighlightManager.instance.HighlightCaution(holePoint.position + new Vector3(0, -.5f, 0), 4);
+			HighlightManager.instance.HighlightInteraction(tape.transform.position + new Vector3(0, 1.5f, 0), 3);
+		}
 	}
 
     public override void Exit() {

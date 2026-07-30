@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000005b5a2600ad2b084f87576eba99131d1875e0fe390fabc4a59beaded7634ca0c7
+  m_ApplyToSortingLayers: 000000005b5a2600ad2b084f87576eba99131d1875e0fe390fabc4a59beaded7634ca0c7c7c2907f
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2094,9 +2094,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435b4515787ef184f860051adb670f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulsingManager
+  indicatorPulsingDuration: 0.3
   pulsingSpeed: 5
   minIntensity: 1.2
   maxIntensity: 1.8
+  interaction: {fileID: 1940210480027828613, guid: efd391eccbb5c744c897c808573231aa, type: 3}
+  caution: {fileID: 8228625440952592010, guid: af5d23e4268694f40b9c277451822201, type: 3}
 --- !u!4 &1518601143
 Transform:
   m_ObjectHideFlags: 0
@@ -2256,7 +2259,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 2cf86f1bb588eb244b49bca296c2c03c, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 20122e6391a4d8a48988a1dc6dab4694, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -3096,6 +3099,7 @@ MonoBehaviour:
   maxScale: {x: 5.41, y: 5.41, z: 1}
   fadeOut: {fileID: 1956848667}
   graphics: {fileID: 1486972628}
+  button: {fileID: 719950717}
   maxOpacity: 0.95
   onSprite: {fileID: 4927880106533781538, guid: caba02d51379b904b8f771f34e4fd387, type: 3}
   offSprite: {fileID: 7835514041807658894, guid: 28c4ae9a56484e14da6ae8f18f9dc2de, type: 3}

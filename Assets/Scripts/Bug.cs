@@ -9,7 +9,6 @@ public class Bug : Obstacle {
     [SerializeField] Swatter swatter;
     [SerializeField] float flightSpeed;
     [SerializeField] float rotationSpeed;
-    [SerializeField] float randomRotationAmount;
     [SerializeField] float rotationRadius;
     [SerializeField] float arrivalDistance;
     [SerializeField] float damage;
@@ -87,6 +86,9 @@ public class Bug : Obstacle {
 
         if (isIntroduced) {
             swatter.Highlight();
+
+            HighlightManager.instance.HighlightCaution(transform.position + new Vector3(0, 1.5f, 0), 4, transform);
+            HighlightManager.instance.HighlightInteraction(swatter.transform.position + new Vector3(.5f, 2f, 0), 3);
         }
 	}
 

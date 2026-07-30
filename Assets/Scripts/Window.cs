@@ -47,6 +47,9 @@ public class Window : Obstacle {
 
 		if (isIntroduced) {
 			blanket.Highlight();
+
+			HighlightManager.instance.HighlightCaution(transform.position + new Vector3(0, .5f, 0), 4);
+			HighlightManager.instance.HighlightInteraction(blanket.transform.position + new Vector3(0, .5f, 0), 3);
 		}
 	}
 

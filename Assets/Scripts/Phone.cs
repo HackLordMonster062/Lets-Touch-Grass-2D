@@ -10,6 +10,7 @@ public class Phone : Obstacle {
     [SerializeField] Vector3 maxScale;
     [SerializeField] SpriteRenderer fadeOut;
     [SerializeField] SpriteRenderer graphics;
+    [SerializeField] PhonePowerButton button;
     [SerializeField] float maxOpacity;
     [SerializeField] Sprite onSprite;
     [SerializeField] Sprite offSprite;
@@ -21,7 +22,7 @@ public class Phone : Obstacle {
         _startPos = transform.position;
         _startScale = transform.localScale;
 
-        GetComponentInChildren<PhonePowerButton>().OnPressed += Exit;
+        button.OnPressed += Exit;
 
         GameManager.OnAfterStateChange += Initiate;
 	}
@@ -44,8 +45,8 @@ public class Phone : Obstacle {
         StartCoroutine(LerpToScale());
 
         if (isIntroduced) {
-            // highlight button
-        }
+			HighlightManager.instance.HighlightInteraction(button.transform.position + new Vector3(0, .2f, 0), 5, button.transform);
+		}
     }
 
     public override void Exit() {

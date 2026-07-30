@@ -48,13 +48,13 @@ public class Tape : MonoBehaviour, IPickup {
 
 	public void Highlight() {
 		_isHighlighted = true;
-		PulsingManager.instance.StartPulse(_renderer);
+		HighlightManager.instance.StartPulse(_renderer);
 	}
 
 	public void StopHighlight() {
 		if (!_isHighlighted) return;
 
-		PulsingManager.instance.StopPulse(_renderer);
+		HighlightManager.instance.StopPulse(_renderer);
 		_isHighlighted = false;
 	}
 

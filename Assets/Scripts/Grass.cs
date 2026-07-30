@@ -37,6 +37,7 @@ public class Grass : Singleton<Grass> {
 		Growth = 0;
         _nextGrowth = 0;
         _isFullyGrown = false;
+		HighlightManager.instance.StopPulse(_renderer);
 	}
 
     void Update() {
@@ -69,7 +70,7 @@ public class Grass : Singleton<Grass> {
 
     void FullyGrown() {
         _isFullyGrown = true;
-        PulsingManager.instance.StartPulse(_renderer);
+        HighlightManager.instance.StartPulse(_renderer);
     }
 
 	private void OnMouseDown() {

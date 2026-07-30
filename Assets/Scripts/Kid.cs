@@ -57,6 +57,9 @@ public class Kid : Obstacle {
 
 		if (isIntroduced) {
 			ball.Highlight();
+
+			HighlightManager.instance.HighlightCaution(transform.position + new Vector3(.5f, .5f, 0), 2);
+			HighlightManager.instance.HighlightInteraction(ball.transform.position + new Vector3(0, 2.5f, 0), 4, ball.transform);
 		}
     }
 
