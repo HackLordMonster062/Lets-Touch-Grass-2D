@@ -11,6 +11,11 @@
         "backfillId": ""
     },
     "payments": [],
-    "leaderboards": [],
+    "leaderboards": [
+		{
+			"id": "time",
+			"isMain": true
+		}
+	],
     "sendAnalyticsEvents": true
 }
