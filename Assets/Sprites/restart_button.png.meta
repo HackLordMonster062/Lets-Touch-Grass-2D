@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bc6f0bcb3fd27134abe1957937761b9d
+guid: eb94f60e75464804f8d27d0f470158c5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6318038929063711755
-    second: angry_mom_0
+      213: -3592817335681496155
+    second: restart_button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: angry_mom_0
+      name: restart_button_0
       rect:
         serializedVersion: 2
-        x: 161
-        y: 45
-        width: 2266
-        height: 2188
+        x: 40
+        y: 32
+        width: 1028
+        height: 1084
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5fb61148111d158a0800000000000000
-      internalID: -6318038929063711755
+      spriteID: 5abc6d33bafb32ec0800000000000000
+      internalID: -3592817335681496155
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      angry_mom_0: -6318038929063711755
+      restart_button_0: -3592817335681496155
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

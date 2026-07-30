@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
@@ -17,5 +18,13 @@ public class PauseMenu : MonoBehaviour {
 
 	public void Continue() {
 		GameManager.instance.TogglePause();
+	}
+
+	public void Restart() {
+		GameManager.instance.Retry();
+	}
+
+	public void MainMenu() {
+		SceneManager.LoadScene("MainMenu");
 	}
 }

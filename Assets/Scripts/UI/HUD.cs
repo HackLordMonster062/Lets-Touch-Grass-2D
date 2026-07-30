@@ -11,4 +11,8 @@ public class HUD : MonoBehaviour {
 
 		timer.text = UIManager.FormatTime(GameManager.instance.Timer);
 	}
+
+	public void Pause() {
+		GameManager.instance.TogglePause(true);
+	}
 }

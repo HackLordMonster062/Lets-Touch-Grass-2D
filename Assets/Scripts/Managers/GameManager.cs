@@ -86,6 +86,10 @@ public class GameManager : PersistentSingleton<GameManager> {
 
 		State = newState;
 		switch (newState) {
+			case GameState.GameLoaded:
+				Time.timeScale = 1;
+				AudioManager.instance.TogglePause(false);
+				break;
 			case GameState.Initiating:
 				break;
 			case GameState.Paused:

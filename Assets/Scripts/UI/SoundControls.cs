@@ -35,7 +35,7 @@ public class SoundControls : MonoBehaviour {
 	}
 
 	public void ToggleMute() {
-		AudioManager.instance.ToggleAllSound(!_isMuted);
+		AudioManager.instance.ToggleAllSound(_isMuted);
 	}
 
 	public void SetMute(bool mute) {
