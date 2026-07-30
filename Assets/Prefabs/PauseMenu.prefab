@@ -99,6 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5967818063325725360}
+  - component: {fileID: 7240185520562879814}
   m_Layer: 5
   m_Name: SoundControls
   m_TagString: Untagged
@@ -128,6 +129,23 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: -44}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7240185520562879814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014221352371471027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2767feac9be97fd4a8b51048a3a7607d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundControls
+  soundOn: {fileID: -5445784581417732004, guid: 1fec02f8c92ad524a9c6b74fd2609f26, type: 3}
+  soundOff: {fileID: -2628961508278406255, guid: 1fec02f8c92ad524a9c6b74fd2609f26, type: 3}
+  muteButton: {fileID: 6780258279691366697}
+  sfxSlider: {fileID: 7464978828151980459}
+  musicSlider: {fileID: 4352623869975827188}
 --- !u!1 &1641362893138103784
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4772051593614152354
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1029,11 +1047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c542b720bd8184a9594a0887a6f0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  soundOn: {fileID: -5445784581417732004, guid: 1fec02f8c92ad524a9c6b74fd2609f26, type: 3}
-  soundOff: {fileID: -2628961508278406255, guid: 1fec02f8c92ad524a9c6b74fd2609f26, type: 3}
-  muteButton: {fileID: 6780258279691366697}
-  sfxSlider: {fileID: 7464978828151980459}
-  musicSlider: {fileID: 4352623869975827188}
+  soundControls: {fileID: 7240185520562879814}
 --- !u!1 &7212747835319918639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,8 +1243,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6675261917034339532}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 7240185520562879814}
+        m_TargetAssemblyTypeName: SoundControls, Assembly-CSharp
         m_MethodName: ToggleMute
         m_Mode: 1
         m_Arguments:

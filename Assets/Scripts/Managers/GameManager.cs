@@ -1,3 +1,4 @@
+using Playgama;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,7 +21,11 @@ public class GameManager : PersistentSingleton<GameManager> {
 		_input = new();
 		_input.UI.Enable();
 
-		SceneManager.sceneLoaded += (scene, loadMode) => { if (scene.name == "MainView") StartGame(); };
+		SceneManager.sceneLoaded += (scene, loadMode) => { if (scene.name == "MainView") StartGame(); if (scene.name == "MainMenu") ChangeState(GameState.GameLoaded); };
+	}
+
+	private void Start() {
+		Bridge.platform.SendMessage("game_ready");
 	}
 
 	public void StartGame() {
@@ -28,15 +33,13 @@ public class GameManager : PersistentSingleton<GameManager> {
 
 		Timer = 0;
 
-		PlayerPrefs.SetFloat("MusicVolume", 1);
-		PlayerPrefs.SetFloat("SFXVolume", 1);
-		PlayerPrefs.SetInt("SoundOn", 1);
-
 		Grass.instance.OnTouched += Win;
 		Grass.instance.OnDied += Lose;
 
 		ChangeState(GameState.Playing);
-    }
+
+		Bridge.platform.SendMessage("level_started");
+	}
 
     void Update() {
 		if (_input.UI.Cancel.WasPressedThisFrame()) {
@@ -51,8 +54,12 @@ public class GameManager : PersistentSingleton<GameManager> {
 	public void TogglePause(bool pause) {
 		if (!pause && State == GameState.Paused) {
 			ChangeState(GameState.Playing);
+
+			Bridge.platform.SendMessage("level_resumed");
 		} else if (pause && State == GameState.Playing) {
 			ChangeState(GameState.Paused);
+
+			Bridge.platform.SendMessage("level_paused");
 		}
 	}
 
@@ -63,11 +70,15 @@ public class GameManager : PersistentSingleton<GameManager> {
 	public void Win() {
 		ChangeState(GameState.Won);
 		ChangeState(GameState.Cleanup);
+
+		Bridge.platform.SendMessage("level_completed");
 	}
 
 	public void Lose() {
 		ChangeState(GameState.Lost);
 		ChangeState(GameState.Cleanup);
+
+		Bridge.platform.SendMessage("level_failed");
 	}
 
 	public void ChangeState(GameState newState) {
@@ -106,6 +117,8 @@ public class GameManager : PersistentSingleton<GameManager> {
 				Grass.instance.OnDied -= Lose;
 
 				break;
+			default:
+				break;
 		}
 
 		OnAfterStateChange?.Invoke(newState);
@@ -123,6 +136,7 @@ public class GameManager : PersistentSingleton<GameManager> {
 }
 
 public enum GameState {
+	GameLoaded,
 	Initiating,
 	Paused,
 	Playing,

@@ -1,3 +1,5 @@
+using Playgama;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +12,11 @@ public class AudioManager : PersistentSingleton<AudioManager> {
 
 	Dictionary<string, AudioSource> _sfxDict;
 
-	public bool IsOn { get; private set; }
+	public bool IsSoundOn { get; private set; }
+	public float SFXVolume { get; private set; }
+	public float MusicVolume { get; private set; }
+
+	public static event Action OnVolumeChanged;
 
 	AudioMixerGroup _masterGroup;
 
@@ -22,21 +28,29 @@ public class AudioManager : PersistentSingleton<AudioManager> {
 		_masterGroup = groups[0];
 
 		GameManager.OnBeforeStateChange += Initiate;
+		Bridge.platform.audioStateChanged += ToggleAllSound;
 	}
 
 	private void Initiate(GameState state) {
-		if (state != GameState.Initiating) return;
+		if (state != GameState.GameLoaded) return;
 
 		InitializeSFXDictionary();
 
-		if (PlayerPrefs.GetInt("SoundOn") == 0) {
-			musicSource.mute = true;
-		}
-
-		SetVolumeMusic(PlayerPrefs.GetFloat("MusicVolume"));
-		SetVolumeSFX(PlayerPrefs.GetFloat("SFXVolume"));
+		Bridge.storage.Get(new List<string>() { "MusicVolume", "SFXVolume", "SoundOn" }, AcceptVolumeData);
 
 		musicSource.Play();
+	}
+
+	void AcceptVolumeData(bool hasSucceeded, List<string> values) {
+		if (hasSucceeded && !values.Contains(null)) {
+			SetVolumeMusic(int.Parse(values[0]) / 100f);
+			SetVolumeSFX(int.Parse(values[1]) / 100f);
+			ToggleAllSound(bool.Parse(values[2]));
+		} else {
+			Bridge.storage.Set(new List<string>() { "MusicVolume", "SFXVolume", "SoundOn" }, new() { "100", "100", "true" });
+			SetVolumeMusic(1);
+			SetVolumeSFX(1);
+		}
 	}
 
 	private void InitializeSFXDictionary() {
@@ -97,14 +111,36 @@ public class AudioManager : PersistentSingleton<AudioManager> {
 		}
 	}
 
+	public void ToggleAllSound(bool on) {
+		if (!Bridge.platform.isAudioEnabled) on = false;
+
+		ToggleSound(on);
+		ToggleMusic(on);
+
+		IsSoundOn = on;
+		OnVolumeChanged?.Invoke();
+
+		Bridge.storage.Set("SoundOn", on);
+	}
+
 	public void SetVolumeSFX(float sfxVolume) {
 		foreach (var (_, source) in _sfxDict) {
 			source.volume = sfxVolume;
 		}
+
+		SFXVolume = sfxVolume;
+		OnVolumeChanged?.Invoke();
+
+		Bridge.storage.Set("SFXVolume", (int)(sfxVolume * 100));
 	}
 
 	public void SetVolumeMusic(float musicVolume) {
 		musicSource.volume = musicVolume;
+
+		MusicVolume = musicVolume;
+		OnVolumeChanged?.Invoke();
+
+		Bridge.storage.Set("SFXVolume", (int)(musicVolume * 100));
 	}
 
 	public void FadeOut(float duration) {
